@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5590780608167753863}
+  - component: {fileID: 4936141264249106889}
+  - component: {fileID: 5546120672749349455}
   - component: {fileID: 5960896146670613919}
   - component: {fileID: 7721758736264007754}
   - component: {fileID: 3221075796258873434}
-  - component: {fileID: 4936141264249106889}
   - component: {fileID: 5018055125995401404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Baseball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,11 +32,43 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.75582, y: -1.31968, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4936141264249106889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258964775971121455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06a1b656616a473986f8067ed140b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseballProjectile
+  speed: 12
+  lifetime: 4
+  spinSpeed: 720
+  audioSource: {fileID: 5018055125995401404}
+  bounceSound: {fileID: 8300000, guid: cdaaf73197bb7a74bb085cd94afccfba, type: 3}
+  bounceVolume: 0.3
+  bounceSoundCooldown: 0.05
+--- !u!114 &5546120672749349455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258964775971121455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81468db740994b07b6543084eb170d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BashableProjectile
+  redirectedSpeed: 16
 --- !u!50 &5960896146670613919
 Rigidbody2D:
   serializedVersion: 5
@@ -158,25 +191,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4936141264249106889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1258964775971121455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e06a1b656616a473986f8067ed140b3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BaseballProjectile
-  speed: 12
-  lifetime: 2
-  spinSpeed: 720
-  audioSource: {fileID: 5018055125995401404}
-  bounceSound: {fileID: 8300000, guid: cdaaf73197bb7a74bb085cd94afccfba, type: 3}
-  bounceVolume: 0.3
-  bounceSoundCooldown: 0.05
 --- !u!82 &5018055125995401404
 AudioSource:
   m_ObjectHideFlags: 0
