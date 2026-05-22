@@ -11,6 +11,7 @@ public class BashableProjectile : MonoBehaviour
 
     public Rigidbody2D Rigidbody => rb;
     public bool IsHeldByBash => isHeldByBash;
+    public bool WasBashed { get; private set; }
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class BashableProjectile : MonoBehaviour
     public void ReleaseFromBash(Vector2 direction, float speedOverride = -1f)
     {
         isHeldByBash = false;
+        WasBashed = true;
 
         if (direction == Vector2.zero)
         {
