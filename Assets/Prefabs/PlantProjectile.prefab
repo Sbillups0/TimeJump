@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8003af9b704c6423bace62955292619e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlantProjectile
-  speed: 8
+  speed: 5
   lifetime: 5
   environmentDestroyGraceTime: 0.1
   playerDamage: 1
