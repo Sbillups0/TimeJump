@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreenController : MonoBehaviour
 {
-    [SerializeField] private string gameSceneName = "GameScene";
+    [SerializeField] private string gameSceneName = "Beanball Tutorial";
 
     public void OnStartPressed()
     {
