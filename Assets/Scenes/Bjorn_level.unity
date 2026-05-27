@@ -2069,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e34e97a2c62402b9624c94fa61ba64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelConnector
-  nextSceneName: Beanball Tutorial
+  nextSceneName: Eres Tutorial
   playerTag: Player
 --- !u!1 &751758691
 GameObject:

@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bjorn_level.unity
     guid: bbe17e2fedfc74543b7615ea76f54e3c
+  - enabled: 1
+    path: Assets/Scenes/Eres Tutorial.unity
+    guid: 56cd57386e1054e94933bc9af89d9aca
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
