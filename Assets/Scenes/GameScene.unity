@@ -13352,7 +13352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 678911646}
   - component: {fileID: 678911648}
-  - component: {fileID: 678911647}
+  - component: {fileID: 678911649}
   m_Layer: 0
   m_Name: Killzone
   m_TagString: Untagged
@@ -13375,18 +13375,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2116562465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &678911647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 678911645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad4b055aa9fd14bad8bb13df22f1c289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Killzone
 --- !u!61 &678911648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13421,7 +13409,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -13433,6 +13421,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &678911649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678911645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a601cf25f49bb49e59f72fcc38779805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IPCatKillzone
 --- !u!1 &725739526
 GameObject:
   m_ObjectHideFlags: 0
@@ -21706,6 +21706,7 @@ GameObject:
   - component: {fileID: 2076648834}
   - component: {fileID: 2076648835}
   - component: {fileID: 2076648836}
+  - component: {fileID: 2076648837}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -22014,6 +22015,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2076648837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076648829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d875b2cd78c444fb90398cf98b3bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IPCatHealth
+  respawnPoint: {fileID: 1096269252}
 --- !u!1 &2116562464
 GameObject:
   m_ObjectHideFlags: 0
