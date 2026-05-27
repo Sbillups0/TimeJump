@@ -9,7 +9,6 @@ public class ArrowProjectile : MonoBehaviour
     {
         direction = dir.normalized;
 
-        // Rotate arrow to face the direction it's flying
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
@@ -23,7 +22,10 @@ public class ArrowProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            IPCatHealth health = other.GetComponent<IPCatHealth>();
+            if (health != null)
+                health.Kill();
+
             Destroy(gameObject);
         }
 
