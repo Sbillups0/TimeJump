@@ -80,9 +80,19 @@ public class SpawnManager : MonoBehaviour
     {
         isRespawning = true;
 
+        if (SceneTransitionManager.Instance != null)
+        {
+            yield return SceneTransitionManager.Instance.FadeToBlack();
+        }
+
         yield return new WaitForSeconds(respawnDelay);
 
         RespawnPlayerImmediately();
+
+        if (SceneTransitionManager.Instance != null)
+        {
+            yield return SceneTransitionManager.Instance.FadeFromBlack();
+        }
 
         isRespawning = false;
     }
