@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     public ParticleSystem landingParticles;
     private bool wasGrounded;
 
+    [Header("Jump")]
+    public float jumpForce = 10f;
+    private bool isGrounded;
+
     [Header("Punch")]
     public Transform punchPoint;
     public float punchRange = 0.8f;
@@ -38,6 +42,17 @@ public class Player : MonoBehaviour
     private SpriteRenderer sr;
     private bool facingRight = true;
 
+    [Header("Launch")]
+    public float launchForceX = 15f;
+    public float launchForceY = 8f;
+    public float launchCooldown = 1f;
+    public Sprite[] launchFrames;
+    public float launchFrameDuration = 0.08f;
+    private float launchCooldownTimer = 0f;
+    private bool isLaunching = false;
+    private float launchFrameTimer = 0f;
+    private int launchCurrentFrame = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,11 +70,21 @@ public class Player : MonoBehaviour
         if (moveInput > 0) facingRight = true;
         if (moveInput < 0) facingRight = false;
 
+        isGrounded = Physics2D.OverlapBox(
+            new Vector2(transform.position.x, transform.position.y - 0.5f),
+            new Vector2(0.8f, 0.1f),
+            0f,
+            LayerMask.GetMask("Ground")
+        );
+
+        // Simple infinite jump
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 10f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             audioSource.PlayOneShot(jumpSound);
         }
+
+        HandleLaunch();
 
         punchTimer = Mathf.Max(0f, punchTimer - Time.deltaTime);
 
@@ -150,12 +175,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        bool isGrounded = Physics2D.OverlapCircle(
-            new Vector2(transform.position.x, transform.position.y - 0.5f),
-            0.1f,
-            LayerMask.GetMask("Ground")
-        );
-
         if (isGrounded && !wasGrounded)
         {
             landingParticles.Play();
@@ -163,9 +182,54 @@ public class Player : MonoBehaviour
         wasGrounded = isGrounded;
     }
 
+    void HandleLaunch()
+    {
+        launchCooldownTimer = Mathf.Max(0f, launchCooldownTimer - Time.deltaTime);
+
+        if (Keyboard.current.oKey.wasPressedThisFrame && launchCooldownTimer <= 0f && !isLaunching)
+        {
+            rb.linearVelocity = new Vector2(launchForceX, launchForceY);
+
+            isLaunching = true;
+            launchCurrentFrame = 0;
+            launchFrameTimer = 0f;
+            launchCooldownTimer = launchCooldown;
+
+            if (launchFrames.Length > 0)
+            {
+                anim.enabled = false;
+                sr.sprite = launchFrames[0];
+            }
+        }
+
+        if (isLaunching)
+        {
+            launchFrameTimer += Time.deltaTime;
+            if (launchFrameTimer >= launchFrameDuration)
+            {
+                launchFrameTimer = 0f;
+                launchCurrentFrame++;
+
+                if (launchCurrentFrame >= launchFrames.Length)
+                {
+                    isLaunching = false;
+                    anim.enabled = true;
+                    anim.Play("Idle");
+                }
+                else
+                {
+                    sr.sprite = launchFrames[launchCurrentFrame];
+                }
+            }
+        }
+    }
+
     void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        if (isLaunching) return;
+
+        float control = isGrounded ? 1f : 0.75f;
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed * control, rb.linearVelocity.y);
     }
 
     void ResetToIdle()

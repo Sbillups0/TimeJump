@@ -21877,6 +21877,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpSound: {fileID: 8300000, guid: f8b00773a78b24e31ad311e3770c23cc, type: 3}
   landingParticles: {fileID: 0}
+  jumpForce: 10
   punchPoint: {fileID: 1397003742}
   punchRange: 3
   punchDamage: 10
@@ -21896,6 +21897,19 @@ MonoBehaviour:
   punchExtendPrefab: {fileID: 5560846318893372309, guid: 0fc2634b4673746c094a24ef8ab2a816, type: 3}
   minPunchLength: 0.5
   maxPunchLength: 10
+  launchForceX: 35
+  launchForceY: 7
+  launchCooldown: 3
+  launchFrames:
+  - {fileID: 226563311131236461, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: -6909239262037970135, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: -565717794317794323, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: 1445050548530530409, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: -1114959281504795763, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: 3825006498695759926, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: -8041728911934155244, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  - {fileID: 3462082676402677310, guid: 13231ad60264f472f83641f83b59445b, type: 3}
+  launchFrameDuration: 0.08
 --- !u!82 &2076648835
 AudioSource:
   m_ObjectHideFlags: 0
