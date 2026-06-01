@@ -62,12 +62,25 @@ public class BaseballProjectile : MonoBehaviour
         {
             return;
         }
-        //Enemy hit logic can be added here
+        
         if (collision.collider.CompareTag("Enemy"))
         {
             Debug.Log("Baseball hit enemy: " + collision.collider.name);
+
+            EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
+
+            if (enemyHealth == null)
+            {
+                enemyHealth = collision.collider.GetComponentInParent<EnemyHealth>();
+            }
+
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(1);
+            }
+
             Destroy(gameObject);
-            // Example: Apply damage to enemy here
+            return;
         }
         PlayBounceSound();
     }
