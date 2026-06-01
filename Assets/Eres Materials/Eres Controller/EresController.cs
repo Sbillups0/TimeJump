@@ -14,7 +14,16 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip landingSound;
+
+
     private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     public static float ExponentialLerp(float current, float target, float lambda, float dt)
     {
@@ -40,6 +49,26 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+
+        bool isMoving = moveInput.sqrMagnitude > 0.01f; // better than Abs(x)
+
+        animator.SetBool("isRunning", isMoving);
+
+        if (!isMoving)
+        {
+            // character stopped moving
+            animator.SetBool("isRunning", false);
+            return;
+        }
+
+        if (moveInput.x > 0.1f)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (moveInput.x < -0.1f)
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     public void OnJump (InputValue value)
@@ -54,6 +83,13 @@ public class PlayerController : MonoBehaviour
     {
         hoverTime = maxHoverTime;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    //audio stuff
+        if (audioSource == null){
+            audioSource = GetComponent<AudioSource>();
+        }
+    
     }
 
     // Update is called once per frame
@@ -71,6 +107,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
+
+            if(jumpSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(jumpSound);
+            }
         }
 
     jumpPressed = false; 
@@ -80,6 +121,11 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            if(!isGrounded && landingSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(landingSound);
+            }
+
             isGrounded = true;
             hoverTime = maxHoverTime; // Reset hover time when landing
         }

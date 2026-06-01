@@ -21,19 +21,22 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    [Header("Enemy Stomp / Landing Damage")]
+    [Header("Enemy Stomp")]
     public int stompDamage = 1;
     public float stompBounceVelocity = 12f;
 
-    // Bigger X = wider landing damage.
-    // Smaller Y = less likely to hit enemies from the side.
-    public Vector2 stompBoxSize = new Vector2(1.2f, 0.25f);
-
-    // Position of the stomp box under the player.
-    // Y should usually be negative.
-    public Vector2 stompBoxOffset = new Vector2(0f, -0.55f);
-
+    [Header("Attack Damage")]
+    public int attackDamage = 1;
+    public Vector2 attackBoxSize = new Vector2(0.8f, 0.6f);
+    public Vector2 attackBoxOffset = new Vector2(0.7f, 0f);
     public LayerMask enemyLayer;
+
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip chargeJumpSound;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip landingSound;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -47,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpVelocity;
 
     private bool isGrounded;
+    private bool wasGrounded;
 
     void Start()
     {
@@ -54,12 +58,25 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         rb.gravityScale = normalGravity;
     }
 
     void Update()
     {
         CheckGrounded();
+
+        if (!wasGrounded && isGrounded)
+        {
+            PlaySound(landingSound);
+        }
+
+        wasGrounded = isGrounded;
+
         HandleMovementInput();
         HandleAttackInput();
         HandleJumpChargeInput();
@@ -91,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         if (groundCheck == null)
         {
             isGrounded = false;
+            Debug.LogWarning("GroundCheck is not assigned.");
             return;
         }
 
@@ -104,6 +122,12 @@ public class PlayerMovement : MonoBehaviour
     private void HandleMovementInput()
     {
         moveInput = 0f;
+
+        if (Keyboard.current == null)
+        {
+            Debug.LogWarning("Keyboard.current is null. Input System may not be set up.");
+            return;
+        }
 
         if (!isCharging)
         {
@@ -134,23 +158,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleAttackInput()
     {
-        if (animator == null)
+        if (Keyboard.current == null)
         {
             return;
         }
 
         if (Keyboard.current.oKey.wasPressedThisFrame)
         {
-            animator.SetTrigger("Attack");
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
+
+            PlaySound(attackSound);
+            TryAttackEnemies();
         }
     }
 
     private void HandleJumpChargeInput()
     {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
         if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded && !isCharging)
         {
             jumpVelocity = minJumpVelocity;
             jumpRequested = true;
+
+            PlaySound(jumpSound);
         }
 
         if (Keyboard.current.pKey.wasPressedThisFrame && isGrounded)
@@ -184,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
 
             jumpRequested = true;
 
-            Debug.Log("Charge: " + chargeTimer + " | Jump Velocity: " + jumpVelocity);
+            PlaySound(chargeJumpSound);
         }
     }
 
@@ -206,22 +243,66 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        TryStompEnemies();
+        TryStompEnemyFromCollision(collision);
     }
 
-    private void TryStompEnemies()
+    private void TryStompEnemyFromCollision(Collision2D collision)
     {
-        // Only do landing damage while falling or landing.
-        if (rb.linearVelocity.y > 0f)
+        EnemyHealth enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
+
+        if (enemyHealth == null)
         {
             return;
         }
 
-        Vector2 boxCenter = (Vector2)transform.position + stompBoxOffset;
+        bool hitEnemyFromAbove = false;
+
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                hitEnemyFromAbove = true;
+                break;
+            }
+        }
+
+        if (!hitEnemyFromAbove)
+        {
+            return;
+        }
+
+        enemyHealth.TakeDamage(stompDamage);
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, stompBounceVelocity);
+
+        isCharging = false;
+        jumpRequested = false;
+
+        if (animator != null)
+        {
+            animator.SetBool("Charging", false);
+        }
+    }
+
+    private void TryAttackEnemies()
+    {
+        float direction = 1f;
+
+        if (spriteRenderer != null && spriteRenderer.flipX)
+        {
+            direction = -1f;
+        }
+
+        Vector2 attackOffset = new Vector2(
+            attackBoxOffset.x * direction,
+            attackBoxOffset.y
+        );
+
+        Vector2 boxCenter = (Vector2)transform.position + attackOffset;
 
         Collider2D[] enemyHits = Physics2D.OverlapBoxAll(
             boxCenter,
-            stompBoxSize,
+            attackBoxSize,
             0f,
             enemyLayer
         );
@@ -232,12 +313,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
-        bool stompedAtLeastOneEnemy = false;
-
-        float stompLeft = boxCenter.x - stompBoxSize.x / 2f;
-        float stompRight = boxCenter.x + stompBoxSize.x / 2f;
-        float stompBottom = boxCenter.y - stompBoxSize.y / 2f;
-        float stompTop = boxCenter.y + stompBoxSize.y / 2f;
 
         foreach (Collider2D enemyHit in enemyHits)
         {
@@ -253,49 +328,40 @@ public class PlayerMovement : MonoBehaviour
                 continue;
             }
 
-            Bounds enemyBounds = enemyHit.bounds;
-
-            bool horizontallyInside =
-                enemyBounds.max.x >= stompLeft &&
-                enemyBounds.min.x <= stompRight;
-
-            bool verticallyInside =
-                enemyBounds.max.y >= stompBottom &&
-                enemyBounds.min.y <= stompTop;
-
-            bool actuallyInsideStompBox = horizontallyInside && verticallyInside;
-
-            if (!actuallyInsideStompBox)
-            {
-                continue;
-            }
-
-            enemyHealth.TakeDamage(stompDamage);
+            enemyHealth.TakeDamage(attackDamage);
             damagedEnemies.Add(enemyHealth);
-            stompedAtLeastOneEnemy = true;
         }
+    }
 
-        if (stompedAtLeastOneEnemy)
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, stompBounceVelocity);
-
-            isCharging = false;
-            jumpRequested = false;
-
-            if (animator != null)
-            {
-                animator.SetBool("Charging", false);
-            }
+            audioSource.PlayOneShot(clip);
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
+
+        float direction = 1f;
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if (sr != null && sr.flipX)
+        {
+            direction = -1f;
+        }
+
+        Vector2 attackOffset = new Vector2(
+            attackBoxOffset.x * direction,
+            attackBoxOffset.y
+        );
 
         Gizmos.DrawWireCube(
-            transform.position + (Vector3)stompBoxOffset,
-            stompBoxSize
+            transform.position + (Vector3)attackOffset,
+            attackBoxSize
         );
 
         if (groundCheck != null)

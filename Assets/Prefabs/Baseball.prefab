@@ -52,6 +52,13 @@ MonoBehaviour:
   speed: 12
   lifetime: 4
   spinSpeed: 720
+  useAimAssist: 1
+  aimAssistRadius: 3
+  aimAssistStrength: 5
+  maxAimAssistAngle: 45
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   audioSource: {fileID: 5018055125995401404}
   bounceSound: {fileID: 8300000, guid: cdaaf73197bb7a74bb085cd94afccfba, type: 3}
   bounceVolume: 0.3
