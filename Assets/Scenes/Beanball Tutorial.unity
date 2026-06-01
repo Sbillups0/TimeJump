@@ -15357,7 +15357,7 @@ MonoBehaviour:
   bashDetectionRadius: 1.5
   bashableLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   bashTimeScale: 0.15
   playerBashBoostForce: 20
   projectileBashSpeed: 20
