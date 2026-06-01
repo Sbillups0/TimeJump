@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
 
+
     private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     public static float ExponentialLerp(float current, float target, float lambda, float dt)
     {
@@ -40,6 +43,26 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+
+        bool isMoving = moveInput.sqrMagnitude > 0.01f; // better than Abs(x)
+
+        animator.SetBool("isRunning", isMoving);
+
+        if (!isMoving)
+        {
+            // character stopped moving
+            animator.SetBool("isRunning", false);
+            return;
+        }
+
+        if (moveInput.x > 0.1f)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (moveInput.x < -0.1f)
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     public void OnJump (InputValue value)
@@ -54,6 +77,8 @@ public class PlayerController : MonoBehaviour
     {
         hoverTime = maxHoverTime;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
