@@ -5,6 +5,8 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip landingSound;
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private float moveInput;
@@ -131,6 +133,7 @@ public class Player : MonoBehaviour
                 isCharging = false;
                 chargingStarted = false;
                 punchTimer = punchCooldown;
+                audioSource.PlayOneShot(attackSound);
 
                 if (punchFrame != null)
                     sr.sprite = punchFrame;
@@ -160,6 +163,7 @@ public class Player : MonoBehaviour
                 isCharging = false;
                 chargingStarted = false;
                 punchTimer = punchCooldown;
+                audioSource.PlayOneShot(attackSound);
                 anim.SetTrigger("Punch");
 
                 Collider2D[] hits = Physics2D.OverlapCircleAll(
@@ -178,6 +182,7 @@ public class Player : MonoBehaviour
         if (isGrounded && !wasGrounded)
         {
             landingParticles.Play();
+            audioSource.PlayOneShot(landingSound);
         }
         wasGrounded = isGrounded;
     }

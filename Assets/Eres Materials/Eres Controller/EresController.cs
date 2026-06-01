@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip landingSound;
+
 
     private Rigidbody2D rb;
     [SerializeField] private Animator animator;
@@ -79,6 +85,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    //audio stuff
+        if (audioSource == null){
+            audioSource = GetComponent<AudioSource>();
+        }
+    
     }
 
     // Update is called once per frame
@@ -96,6 +107,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
+
+            if(jumpSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(jumpSound);
+            }
         }
 
     jumpPressed = false; 
@@ -105,6 +121,11 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            if(!isGrounded && landingSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(landingSound);
+            }
+
             isGrounded = true;
             hoverTime = maxHoverTime; // Reset hover time when landing
         }
