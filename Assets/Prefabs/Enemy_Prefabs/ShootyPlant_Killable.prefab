@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2045478531098426811, guid: 99f50244d42604b9093a081113535ac1, type: 3}
       propertyPath: m_Name
-      value: ShootyPlant
+      value: ShootyPlant_Killable
       objectReference: {fileID: 0}
     - target: {fileID: 2402266387970179059, guid: 99f50244d42604b9093a081113535ac1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51,6 +51,18 @@ PrefabInstance:
     - target: {fileID: 2402266387970179059, guid: 99f50244d42604b9093a081113535ac1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6756744299962309570, guid: 99f50244d42604b9093a081113535ac1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6756744299962309570, guid: 99f50244d42604b9093a081113535ac1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6756744299962309570, guid: 99f50244d42604b9093a081113535ac1, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

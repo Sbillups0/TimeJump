@@ -540,10 +540,30 @@ public class PlayerController2D : MonoBehaviour
         {
             BashableProjectile bashable = hit.GetComponent<BashableProjectile>();
 
+            if (bashable == null)
+            {
+                bashable = hit.GetComponentInParent<BashableProjectile>();
+            }
+
+            if (bashable == null)
+            {
+                bashable = hit.GetComponentInChildren<BashableProjectile>();
+            }
+
             if (bashable == null || bashable.IsHeldByBash)
                 continue;
 
-            float distance = Vector2.Distance(transform.position, bashable.transform.position);
+            EnemyHealth enemyHealth = bashable.GetComponent<EnemyHealth>();
+
+            if (enemyHealth == null)
+            {
+                enemyHealth = bashable.GetComponentInParent<EnemyHealth>();
+            }
+
+            if (enemyHealth != null && enemyHealth.IsDead)
+                continue;
+
+            float distance = Vector2.Distance(transform.position, hit.bounds.center);
 
             if (distance < nearestDistance)
             {

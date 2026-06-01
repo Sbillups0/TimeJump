@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9092720688752603359, guid: 8ca235d85b1d44d57a7e163c782cdc77, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9662448, g: 0.41037738, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,6 +152,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   invincible: 1
   maxHealth: 1
+  destroyDelay: 0.7
+  deathTrigger: Die
+  disableCollidersOnDeath: 1
+  stopMovementOnDeath: 1
 --- !u!65 &1674214554892301589
 BoxCollider:
   m_ObjectHideFlags: 0
