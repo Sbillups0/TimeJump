@@ -9,8 +9,6 @@ public class TutorialBox : MonoBehaviour
     [SerializeField] private GameObject popupRoot;
     [SerializeField] private TMPro.TextMeshProUGUI textField;
 
-    private bool isShowing = false;
-
     void Start()
     {
         if (popupRoot != null)
@@ -24,21 +22,11 @@ public class TutorialBox : MonoBehaviour
 
         if (popupRoot != null)
             popupRoot.SetActive(true);
-
-        Time.timeScale = 0f;
-        isShowing = true;
+       
     }
 
-    void Update()
+    public void Hide()
     {
-        if (isShowing && Input.GetMouseButtonDown(0))
-            Dismiss();
-    }
-
-    public void Dismiss()
-    {
-        Time.timeScale = 1f;
-        isShowing = false;
         if (popupRoot != null)
             popupRoot.SetActive(false);
     }

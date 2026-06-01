@@ -11,9 +11,19 @@ public class SignTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (triggerOnce && hasTriggered) return;
+            if (triggerOnce && hasTriggered) 
+                return;
+
             hasTriggered = true;
             tutorialBox.Show();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            tutorialBox.Hide();
         }
     }
 }
