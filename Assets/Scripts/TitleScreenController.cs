@@ -5,7 +5,7 @@ public class TitleScreenController : MonoBehaviour
 {
     [SerializeField] private string gameSceneName = "Beanball Tutorial";
 
-    private void Update()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
