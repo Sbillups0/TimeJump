@@ -41,7 +41,10 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackHitSound;
     [SerializeField, Range(0f, 1f)] private float attackHitVolume = 1f;
-
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField, Range(0f, 1f)] private float jumpVolume = 1f;
+    [SerializeField] private AudioClip landingSound;
+    [SerializeField, Range(0f, 1f)] private float landingVolume = 1f;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -54,6 +57,7 @@ public class PlayerController2D : MonoBehaviour
     private Vector2 pendingAttackDirection = Vector2.right;
 
     private bool isGrounded;
+    private bool wasGrounded;
     private bool isBashing;
 
     private float facingDirection = 1f;
@@ -137,6 +141,7 @@ public class PlayerController2D : MonoBehaviour
         if (isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            PlayJumpSound();
         }
     }
 
@@ -232,6 +237,8 @@ public class PlayerController2D : MonoBehaviour
 
     private void CheckGrounded()
     {
+        wasGrounded = isGrounded;
+
         if (groundCheck == null)
         {
             isGrounded = false;
@@ -243,6 +250,11 @@ public class PlayerController2D : MonoBehaviour
             groundCheckRadius,
             groundLayer
         );
+
+        if (!wasGrounded && isGrounded)
+        {
+            PlayLandingSound();
+        }
     }
 
     private void FlipCharacter()
@@ -425,6 +437,21 @@ public class PlayerController2D : MonoBehaviour
         if (audioSource != null && attackHitSound != null)
         {
             audioSource.PlayOneShot(attackHitSound, attackHitVolume);
+        }
+    }
+    private void PlayJumpSound()
+    {
+        if (audioSource != null && jumpSound != null)
+        {
+            audioSource.PlayOneShot(jumpSound, jumpVolume);
+        }
+    }
+
+    private void PlayLandingSound()
+    {
+        if (audioSource != null && landingSound != null)
+        {
+            audioSource.PlayOneShot(landingSound, landingVolume);
         }
     }
 

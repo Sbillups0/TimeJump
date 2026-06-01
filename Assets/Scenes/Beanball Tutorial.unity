@@ -14097,6 +14097,10 @@ MonoBehaviour:
   audioSource: {fileID: 2132546216}
   attackHitSound: {fileID: 8300000, guid: 522e3ab7bac86e443bd5721d8933b455, type: 3}
   attackHitVolume: 0.4
+  jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
+  jumpVolume: 1
+  landingSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
+  landingVolume: 1
 --- !u!114 &2132546210
 MonoBehaviour:
   m_ObjectHideFlags: 0
