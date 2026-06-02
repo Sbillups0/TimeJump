@@ -170,6 +170,7 @@ public class EnemyShooterAI : MonoBehaviour
         if (projectile != null)
         {
             projectile.Launch(direction, gameObject);
+            // ADD SHOOT SOUND HERE
         }
         else
         {

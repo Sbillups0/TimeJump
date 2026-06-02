@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5233528131956980187}
   - component: {fileID: 8091053666957299633}
   - component: {fileID: 6677747513314735188}
+  - component: {fileID: 2414920423686621183}
   - component: {fileID: 2498413035484680051}
   - component: {fileID: 7087287181768010732}
   m_Layer: 7
@@ -159,6 +160,26 @@ MonoBehaviour:
   useDeathAnimation: 0
   disableCollidersOnDeath: 1
   stopMovementOnDeath: 1
+--- !u!114 &2414920423686621183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045478531098426811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81468db740994b07b6543084eb170d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BashableProjectile
+  bashableType: 1
+  redirectedSpeed: 16
+  damageEnemyOnBash: 1
+  bashDamage: 1
+  knockEnemyBack: 1
+  enemyKnockbackForce: 6
+  enemyKnockbackLockTime: 0.15
+  freezeDuringBash: 1
 --- !u!61 &2498413035484680051
 BoxCollider2D:
   m_ObjectHideFlags: 0

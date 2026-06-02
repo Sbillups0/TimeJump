@@ -7,6 +7,7 @@ public class CharacterSwitcher : MonoBehaviour
     public GameObject Beanball;
     public GameObject Bjorn;
     public GameObject Eres;
+    public GameObject IpCat;
     public Camera mainCamera;
     public Vector3 cameraOffset = new Vector3(0, 0, -10);
 
@@ -15,7 +16,7 @@ public class CharacterSwitcher : MonoBehaviour
     void Start()
     {
         Debug.Log("Starting");
-        Beanball.GetComponent<PlayerController2D>().enabled = false;
+        IpCat.GetComponent<Player>().enabled = false;
         Bjorn.GetComponent<PlayerMovement>().enabled = false;
         Eres.GetComponent<PlayerController>().enabled = false;
         Debug.Log("About to switch");
@@ -82,8 +83,9 @@ public class CharacterSwitcher : MonoBehaviour
             }
             else if (activeCharacter == Eres)
             {
-                SwitchTo(Beanball);
+                SwitchTo(IpCat);
             }
+            
         }
     }
 
@@ -101,6 +103,10 @@ public class CharacterSwitcher : MonoBehaviour
         {
             Eres.GetComponent<PlayerController>().enabled = true;
         }
+         else if (character == Eres)
+        {
+            Eres.GetComponent<Player>().enabled = true;
+        }
     }
 
     void DisableController(GameObject character)
@@ -117,6 +123,10 @@ public class CharacterSwitcher : MonoBehaviour
         else if (character == Eres)
         {
             Eres.GetComponent<PlayerController>().enabled = false;
+        }
+        else if (character == Eres)
+        {
+            Eres.GetComponent<Player>().enabled = false;
         }
     }
 }

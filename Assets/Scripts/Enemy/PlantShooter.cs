@@ -86,6 +86,7 @@ public class PlantShooter : MonoBehaviour
         if (projectile != null)
         {
             projectile.Launch(shootDirection, gameObject);
+            // ADD SHOOT SOUND HERE
         }
         else
         {

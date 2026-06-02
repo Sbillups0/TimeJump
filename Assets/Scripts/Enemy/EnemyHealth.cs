@@ -74,11 +74,13 @@ public class EnemyHealth : MonoBehaviour
         if (enemyShooterAI != null)
         {
             enemyShooterAI.enabled = false;
+            // ADD DEATH FOR GOLEM SOUND HERE
         }
 
         if (plantShooter != null)
         {
             plantShooter.enabled = false;
+            // ADD DEATH FOR PLANT SOUND HERE
         }
 
         if (stopMovementOnDeath && rb != null)
