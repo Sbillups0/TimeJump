@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class iceProjectile : MonoBehaviour
+{
+    [SerializeField] private float speed = 12f;
+    [SerializeField] private float lifetime = 3f;
+    private Rigidbody2D rb;
+
+    private float direction;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void Initialize(float dir)
+    {
+        direction = dir;
+        rb.linearVelocity = new Vector2(direction * speed, 0f);
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Destroy(gameObject, lifetime);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
+}

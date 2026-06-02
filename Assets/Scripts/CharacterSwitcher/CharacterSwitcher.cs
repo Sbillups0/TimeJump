@@ -85,6 +85,10 @@ public class CharacterSwitcher : MonoBehaviour
             {
                 SwitchTo(IpCat);
             }
+            else if (activeCharacter == IpCat)
+            {
+                SwitchTo(Beanball);
+            }
             
         }
     }
@@ -103,9 +107,9 @@ public class CharacterSwitcher : MonoBehaviour
         {
             Eres.GetComponent<PlayerController>().enabled = true;
         }
-         else if (character == Eres)
+         else if (character == IpCat)
         {
-            Eres.GetComponent<Player>().enabled = true;
+            IpCat.GetComponent<Player>().enabled = true;
         }
     }
 
@@ -124,9 +128,9 @@ public class CharacterSwitcher : MonoBehaviour
         {
             Eres.GetComponent<PlayerController>().enabled = false;
         }
-        else if (character == Eres)
+        else if (character == IpCat)
         {
-            Eres.GetComponent<Player>().enabled = false;
+            IpCat.GetComponent<Player>().enabled = false;
         }
     }
 }
