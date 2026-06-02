@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce = 10f;
+    public int maxJumps = 2;
     private bool isGrounded;
+    private int jumpsRemaining;
 
     [Header("Punch")]
     public Transform punchPoint;
@@ -61,6 +63,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -71,19 +74,21 @@ public class Player : MonoBehaviour
 
         if (moveInput > 0) facingRight = true;
         if (moveInput < 0) facingRight = false;
+        sr.flipX = !facingRight;
 
         isGrounded = Physics2D.OverlapBox(
-            new Vector2(transform.position.x, transform.position.y - 0.5f),
-            new Vector2(0.8f, 0.1f),
+            new Vector2(transform.position.x, transform.position.y - 1.4f),
+            new Vector2(0.4f, 0.1f),
             0f,
             LayerMask.GetMask("Ground")
         );
 
-        // Simple infinite jump
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        // Double jump (limited to maxJumps)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             audioSource.PlayOneShot(jumpSound);
+            jumpsRemaining--;
         }
 
         HandleLaunch();
@@ -181,6 +186,7 @@ public class Player : MonoBehaviour
 
         if (isGrounded && !wasGrounded)
         {
+            jumpsRemaining = maxJumps;
             landingParticles.Play();
             audioSource.PlayOneShot(landingSound);
         }
@@ -193,7 +199,8 @@ public class Player : MonoBehaviour
 
         if (Keyboard.current.oKey.wasPressedThisFrame && launchCooldownTimer <= 0f && !isLaunching)
         {
-            rb.linearVelocity = new Vector2(launchForceX, launchForceY);
+            float direction = facingRight ? 1f : -1f;
+            rb.linearVelocity = new Vector2(launchForceX * direction, launchForceY);
 
             isLaunching = true;
             launchCurrentFrame = 0;
@@ -248,5 +255,11 @@ public class Player : MonoBehaviour
         if (punchPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(punchPoint.position, punchRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(
+            new Vector3(transform.position.x, transform.position.y - 1.4f, 0f),
+            new Vector3(0.4f, 0.1f, 0f)
+        );
     }
 }
