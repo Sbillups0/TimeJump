@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "TimeJump.slnx",
+    "dotnet.defaultSolution": "Lab4.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
