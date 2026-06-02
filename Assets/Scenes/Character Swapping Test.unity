@@ -822,11 +822,11 @@ GameObject:
   - component: {fileID: 292227314}
   - component: {fileID: 292227313}
   - component: {fileID: 292227312}
-  - component: {fileID: 292227311}
   - component: {fileID: 292227310}
   - component: {fileID: 292227309}
   - component: {fileID: 292227308}
   - component: {fileID: 292227307}
+  - component: {fileID: 292227316}
   m_Layer: 0
   m_Name: Beanball
   m_TagString: Player
@@ -985,7 +985,7 @@ MonoBehaviour:
   jumpForce: 10
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   groundCheck: {fileID: 1219360290}
   groundCheckRadius: 0.12
   attackPoint: {fileID: 29917867}
@@ -1010,36 +1010,6 @@ MonoBehaviour:
   audioSource: {fileID: 292227307}
   attackHitSound: {fileID: 8300000, guid: 522e3ab7bac86e443bd5721d8933b455, type: 3}
   attackHitVolume: 0.4
---- !u!114 &292227311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292227306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 9e9ba20f091534e0cb4b6abfd2a88962, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!212 &292227312
 SpriteRenderer:
   serializedVersion: 2
@@ -1183,6 +1153,36 @@ Transform:
   - {fileID: 1793140683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &292227316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292227306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 9e9ba20f091534e0cb4b6abfd2a88962, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &300818719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4794269801335337820, guid: 8102643f383192746ba49a9096f97529, type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 0
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 4794269801335337820, guid: 8102643f383192746ba49a9096f97529, type: 3}
       propertyPath: stompBounceVelocity
@@ -1942,6 +1942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 713919252}
   - component: {fileID: 713919251}
+  - component: {fileID: 713919253}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1981,6 +1982,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &713919253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713919250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 9e9ba20f091534e0cb4b6abfd2a88962, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &722556809
 GameObject:
   m_ObjectHideFlags: 0
@@ -3401,6 +3432,7 @@ MonoBehaviour:
   hoverTime: 0
   isJumping: 0
   maxHoverTime: 4
+  animator: {fileID: 0}
 --- !u!82 &1287184358
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3506,9 +3538,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287184356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fdd652741fd6c47f8b5ac5c6a702fb97, type: 2}
+  m_Controller: {fileID: 9100000, guid: 86c06e541fe85d044af132e6b5711b3e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3584,7 +3616,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287184356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -5288,7 +5320,7 @@ GameObject:
   - component: {fileID: 2018578666}
   - component: {fileID: 2018578665}
   - component: {fileID: 2018578664}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Ground_Tilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}
