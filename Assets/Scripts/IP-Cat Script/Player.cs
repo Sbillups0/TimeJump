@@ -178,7 +178,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.CompareTag("Enemy"))
                     {
-                        Destroy(hit.gameObject);
+                        hit.gameObject.SetActive(false); // disable instead of destroy so EnemyManager can respawn
                     }
                 }
             }
@@ -191,6 +191,18 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(landingSound);
         }
         wasGrounded = isGrounded;
+    }
+
+    public void ResetState()
+    {
+        isCharging = false;
+        chargingStarted = false;
+        isLaunching = false;
+        punchTimer = 0f;
+        launchCooldownTimer = 0f;
+        jumpsRemaining = maxJumps;
+        CancelInvoke("ResetToIdle");
+        ResetToIdle();
     }
 
     void HandleLaunch()

@@ -56,4 +56,10 @@ public class BirdEnemy : MonoBehaviour
             Instantiate(ballPrefab, spawnPos, Quaternion.identity);
         }
     }
+
+    public void ResetState()
+    {
+        dropTimer = dropInterval;
+        movingRight = true;
+    }
 }

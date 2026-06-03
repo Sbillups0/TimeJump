@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ArcherEnemy : MonoBehaviour
 {
-    public float detectionRange = 10f;  // How far the archer can see
-    public float fireRate = 2f;         // Seconds between shots
-    public GameObject arrowPrefab;      // Drag your Arrow prefab here
-    public Transform firePoint;         // Where the arrow spawns from
+    public float detectionRange = 10f;
+    public float fireRate = 2f;
+    public GameObject arrowPrefab;
+    public Transform firePoint;
 
     private Transform player;
     private float fireTimer;
@@ -44,5 +44,11 @@ public class ArcherEnemy : MonoBehaviour
 
         if (ap != null)
             ap.SetDirection(direction);
+    }
+
+    public void ResetState()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        fireTimer = fireRate;
     }
 }
