@@ -149,11 +149,11 @@ GameObject:
   - component: {fileID: 7690028202230645984}
   - component: {fileID: 1305417793724269248}
   - component: {fileID: 1136867337926276430}
+  - component: {fileID: 6154388933129195577}
   - component: {fileID: 8467774087397974297}
   - component: {fileID: 3266575508021172607}
   - component: {fileID: 8854092730981776833}
   - component: {fileID: 175734716631169243}
-  - component: {fileID: 6154388933129195577}
   - component: {fileID: 1737282143777563871}
   m_Layer: 0
   m_Name: Eres
@@ -303,6 +303,36 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &6154388933129195577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5466612856006367176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9021c658e58947dca86f6ef498de749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  speed: 5
+  jumpForce: 5
+  isGrounded: 1
+  isHovering: 0
+  hoverTime: 0
+  isJumping: 0
+  maxHoverTime: 4
+  currentSpell: 1
+  iceProjectilePrefab: {fileID: 4901254403840318738, guid: 1491006cba5c04d78ab60893f243f2c5, type: 3}
+  earthBallPrefab: {fileID: 7603020585056738878, guid: 447b025ab5d9042cfa6cfe4b919d7be4, type: 3}
+  fireWallPrefab: {fileID: 5753671245873619481, guid: b0c0b6215c52c41079c5544e5e238810, type: 3}
+  spellSpawn: {fileID: 683954827853872026}
+  spellOffset: 1
+  audioSource: {fileID: 2444297908879995692}
+  jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  landingSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
+  animator: {fileID: 8854092730981776833}
 --- !u!114 &8467774087397974297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,36 +498,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6154388933129195577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5466612856006367176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9021c658e58947dca86f6ef498de749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 5
-  jumpForce: 5
-  isGrounded: 1
-  isHovering: 0
-  hoverTime: 0
-  isJumping: 0
-  maxHoverTime: 4
-  currentSpell: 1
-  iceProjectilePrefab: {fileID: 4901254403840318738, guid: 1491006cba5c04d78ab60893f243f2c5, type: 3}
-  earthBallPrefab: {fileID: 7603020585056738878, guid: 447b025ab5d9042cfa6cfe4b919d7be4, type: 3}
-  fireWallPrefab: {fileID: 5753671245873619481, guid: b0c0b6215c52c41079c5544e5e238810, type: 3}
-  spellSpawn: {fileID: 683954827853872026}
-  spellOffset: 1
-  audioSource: {fileID: 2444297908879995692}
-  jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
-  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
-  landingSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
-  animator: {fileID: 8854092730981776833}
 --- !u!114 &1737282143777563871
 MonoBehaviour:
   m_ObjectHideFlags: 0
