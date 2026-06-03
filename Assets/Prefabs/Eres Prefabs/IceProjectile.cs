@@ -41,7 +41,9 @@ public class iceProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+
+        Debug.Log("Hit:" + other.name);
+        EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
 
         if (enemy != null)
         {

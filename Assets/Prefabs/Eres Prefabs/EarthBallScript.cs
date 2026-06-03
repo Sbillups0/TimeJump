@@ -39,11 +39,11 @@ public class EarthBallScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit");
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+        EnemyHealth enemy = collision.gameObject.GetComponentInParent<EnemyHealth>();
 
         if (enemy != null)
         {
@@ -51,5 +51,11 @@ public class EarthBallScript : MonoBehaviour
         }
 
         Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        
     }
 }

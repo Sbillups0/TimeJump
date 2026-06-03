@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5130224467209795252}
   m_Layer: 0
   m_Name: SpikedSlime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,6 +218,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.011222164, y: -0.112529635}
-  m_Size: {x: 0.2306699, y: 0.2306699}
+  m_Offset: {x: -0.011222164, y: -0.036805194}
+  m_Size: {x: 0.2306699, y: 0.38211912}
   m_Direction: 0
