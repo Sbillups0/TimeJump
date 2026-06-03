@@ -348,6 +348,108 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1001 &111726257
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 707685969}
+    m_Modifications:
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564516670874526877, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+      propertyPath: m_Name
+      value: PauseMenuCanvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+--- !u!224 &111726258 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 727330341330400011, guid: 225944eed82c242a09766da575cb1c3a, type: 3}
+  m_PrefabInstance: {fileID: 111726257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &124104938
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1276,8 @@ MonoBehaviour:
   checkpointIndex: 0
   inactiveColor: {r: 1, g: 1, b: 1, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  checkpointSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!61 &570455779
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1370,6 +1474,7 @@ Transform:
   - {fileID: 623974675}
   - {fileID: 516516153}
   - {fileID: 1646159406}
+  - {fileID: 111726258}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &742166423
@@ -1482,6 +1587,8 @@ MonoBehaviour:
   checkpointIndex: 0
   inactiveColor: {r: 1, g: 1, b: 1, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  checkpointSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!61 &742166427
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1638,6 +1745,8 @@ MonoBehaviour:
   checkpointIndex: 0
   inactiveColor: {r: 1, g: 1, b: 1, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  checkpointSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!61 &747599994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7109,6 +7218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelConnector
   nextSceneName: GameScene
   playerTag: Player
+  audioSource: {fileID: 0}
+  touchSound: {fileID: 0}
 --- !u!1 &1668724234
 GameObject:
   m_ObjectHideFlags: 0
@@ -7310,6 +7421,8 @@ MonoBehaviour:
   checkpointIndex: 0
   inactiveColor: {r: 1, g: 1, b: 1, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  checkpointSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!61 &1691731914
 BoxCollider2D:
   m_ObjectHideFlags: 0
