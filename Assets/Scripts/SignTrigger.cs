@@ -5,6 +5,10 @@ public class SignTrigger : MonoBehaviour
     [SerializeField] private TutorialBox tutorialBox;
     [SerializeField] private bool triggerOnce = true;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip signSound;
+
     private bool hasTriggered = false;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -15,6 +19,12 @@ public class SignTrigger : MonoBehaviour
                 return;
 
             hasTriggered = true;
+
+            if (audioSource != null && signSound != null)
+            {
+                audioSource.PlayOneShot(signSound);
+            }
+
             tutorialBox.Show();
         }
     }

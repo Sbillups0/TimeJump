@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -31,6 +32,13 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 attackBoxOffset = new Vector2(0.7f, 0f);
     public LayerMask enemyLayer;
 
+    [Header("Landing Effects")]
+    [SerializeField] private ParticleSystem landingParticles;
+    [SerializeField] private Transform landingParticleSpawnPoint;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float landingShakeDuration = 0.15f;
+    [SerializeField] private float landingShakeStrength = 0.25f;
+
     [Header("Sound Effects")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpSound;
@@ -52,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
 
+    private bool shouldShakeOnLanding;
+
+    private Tween cameraShakeTween;
+    private Vector3 cameraStartLocalPosition;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,6 +77,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.gravityScale = normalGravity;
+
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+
+        if (mainCamera != null)
+        {
+            cameraStartLocalPosition = mainCamera.transform.localPosition;
+        }
     }
 
     void Update()
@@ -73,6 +96,16 @@ public class PlayerMovement : MonoBehaviour
         if (!wasGrounded && isGrounded)
         {
             PlaySound(landingSound);
+
+            // Particles happen on both regular jump and P charged jump.
+            PlayLandingParticles();
+
+            // Screen shake only happens after P charged jump.
+            if (shouldShakeOnLanding)
+            {
+                ShakeCamera();
+                shouldShakeOnLanding = false;
+            }
         }
 
         wasGrounded = isGrounded;
@@ -182,14 +215,19 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        // Regular jump with Space.
+        // This gets landing particles, but no camera shake.
         if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded && !isCharging)
         {
             jumpVelocity = minJumpVelocity;
             jumpRequested = true;
 
+            shouldShakeOnLanding = false;
+
             PlaySound(jumpSound);
         }
 
+        // Start charging with P.
         if (Keyboard.current.pKey.wasPressedThisFrame && isGrounded)
         {
             isCharging = true;
@@ -201,12 +239,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // Keep charging while P is held.
         if (isCharging && Keyboard.current.pKey.isPressed)
         {
             chargeTimer += Time.deltaTime;
             chargeTimer = Mathf.Clamp(chargeTimer, 0f, maxChargeTime);
         }
 
+        // Release P charged jump.
+        // This gets landing particles AND camera shake.
         if (isCharging && Keyboard.current.pKey.wasReleasedThisFrame)
         {
             isCharging = false;
@@ -220,6 +261,8 @@ public class PlayerMovement : MonoBehaviour
             jumpVelocity = Mathf.Lerp(minJumpVelocity, maxJumpVelocity, chargePercent);
 
             jumpRequested = true;
+
+            shouldShakeOnLanding = true;
 
             PlaySound(chargeJumpSound);
         }
@@ -239,6 +282,59 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = fallingGravity;
         }
+    }
+
+    private void PlayLandingParticles()
+    {
+        if (landingParticles == null)
+        {
+            return;
+        }
+
+        if (landingParticleSpawnPoint != null)
+        {
+            landingParticles.transform.position = landingParticleSpawnPoint.position;
+        }
+        else if (groundCheck != null)
+        {
+            landingParticles.transform.position = groundCheck.position;
+        }
+        else
+        {
+            landingParticles.transform.position = transform.position;
+        }
+
+        landingParticles.Play();
+    }
+
+    private void ShakeCamera()
+    {
+        if (mainCamera == null)
+        {
+            return;
+        }
+
+        if (cameraShakeTween != null && cameraShakeTween.IsActive())
+        {
+            cameraShakeTween.Kill();
+        }
+
+        Transform camTransform = mainCamera.transform;
+
+        camTransform.localPosition = cameraStartLocalPosition;
+
+        cameraShakeTween = camTransform.DOShakePosition(
+            landingShakeDuration,
+            landingShakeStrength,
+            vibrato: 12,
+            randomness: 90f,
+            snapping: false,
+            fadeOut: true
+        )
+        .OnComplete(() =>
+        {
+            camTransform.localPosition = cameraStartLocalPosition;
+        });
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -277,6 +373,7 @@ public class PlayerMovement : MonoBehaviour
 
         isCharging = false;
         jumpRequested = false;
+        shouldShakeOnLanding = false;
 
         if (animator != null)
         {

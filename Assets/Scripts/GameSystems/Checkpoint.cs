@@ -12,6 +12,10 @@ public class Checkpoint : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private Color inactiveColor = Color.white;
     [SerializeField] private Color activeColor = Color.green;
+    
+    [Header("Audio")]
+    [SerializeField] private AudioClip checkpointSound;
+    [SerializeField] private AudioSource audioSource;
 
     private bool isActivated;
 
@@ -25,6 +29,11 @@ public class Checkpoint : MonoBehaviour
         if (spriteRenderer == null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
         }
 
         SetVisual(false);
@@ -59,7 +68,17 @@ public class Checkpoint : MonoBehaviour
         isActivated = true;
         SetVisual(true);
 
+        PlayCheckpointSound();
+
         Debug.Log("Checkpoint activated: " + name);
+    }
+
+    private void PlayCheckpointSound()
+    {
+        if (audioSource == null || checkpointSound == null)
+            return;
+
+        audioSource.PlayOneShot(checkpointSound);
     }
 
     private void SetVisual(bool active)
