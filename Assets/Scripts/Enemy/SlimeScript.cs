@@ -63,7 +63,12 @@ public class SlimeScript : MonoBehaviour
 
         Vector2 direction = toPlayer.normalized;
 
-        rb.linearVelocity = direction * moveSpeed;
+        Vector2 velocity = rb.linearVelocity;
+
+// only change horizontal movement
+        velocity.x = direction.x * moveSpeed;
+
+        rb.linearVelocity = velocity;
 
         FaceDirection(direction);
 
