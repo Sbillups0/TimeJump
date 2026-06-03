@@ -1061,6 +1061,14 @@ PrefabInstance:
       propertyPath: landingParticleSpawnPoint
       value: 
       objectReference: {fileID: 897335680}
+    - target: {fileID: 4794269801335337820, guid: 8102643f383192746ba49a9096f97529, type: 3}
+      propertyPath: chargedLandingParticleSize
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794269801335337820, guid: 8102643f383192746ba49a9096f97529, type: 3}
+      propertyPath: regularLandingParticleSize
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
