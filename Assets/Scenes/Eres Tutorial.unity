@@ -14513,8 +14513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d39678d4a3e340849ea1a03af3c0443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 3
-  currentHealth: 3
+  maxHealth: 10
+  currentHealth: 10
   invincibilityTime: 1
   spawnManager: {fileID: 1780355859}
 --- !u!114 &2132546218
