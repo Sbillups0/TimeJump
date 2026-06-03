@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpellType currentSpell;
     [SerializeField] private GameObject iceProjectilePrefab;
     [SerializeField] private GameObject earthBallPrefab;
+    [SerializeField] private GameObject fireWallPrefab;
     [SerializeField] private Transform spellSpawn;
     [SerializeField] private float spellOffset = 1f;
 
@@ -83,11 +84,33 @@ public class PlayerController : MonoBehaviour
     void CastFire()
     {
         Debug.Log("Cast Fire");
+       
+        animator.SetTrigger("CastFire");
+
+        GameObject projectile =
+            Instantiate(
+                fireWallPrefab,
+                spellSpawn.position,
+                Quaternion.identity
+            );
+        float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Fire Sound here
+
+        if (direction < 0)
+    {
+        Vector3 scale = projectile.transform.localScale;
+        scale.x *= -1;
+        projectile.transform.localScale = scale;
+    }
+
+        projectile.GetComponent<fireScript>().Initialize(direction);
     }
 
     void CastIce()
     {
         Debug.Log("Cast Ice");
+        animator.SetTrigger("CastIce");
         GameObject projectile =
             Instantiate(
                 iceProjectilePrefab,
@@ -95,6 +118,8 @@ public class PlayerController : MonoBehaviour
                 Quaternion.identity
             );
         float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Ice Sound here
 
         if (direction < 0)
     {
@@ -109,6 +134,8 @@ public class PlayerController : MonoBehaviour
     void CastEarth()
     {
         Debug.Log("Cast Earth");
+        animator.SetTrigger("CastEarth");
+
         GameObject projectile =
             Instantiate(
                 earthBallPrefab,
@@ -116,6 +143,8 @@ public class PlayerController : MonoBehaviour
                 Quaternion.identity
             );
         float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Earth Sound Here
 
         if (direction < 0)
     {
@@ -130,6 +159,8 @@ public class PlayerController : MonoBehaviour
     void Special()
     {
         Debug.Log("Eres Changing Spells");
+
+        // Maybe a sound for changing spells here?
 
         currentSpell =(SpellType)(((int)currentSpell + 1) % System.Enum.GetValues(typeof(SpellType)).Length);
         Debug.Log("Equipped Spell: " + currentSpell);

@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class iceProjectile : MonoBehaviour
+public class fireScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 12f;
+    [SerializeField] private float speed = 3f;
     [SerializeField] private float lifetime = 3f;
     private Rigidbody2D rb;
-    [SerializeField] private int damage = 1;
+
+    [SerializeField] private int damage = 3;
 
     private float direction;
 

@@ -7,6 +7,8 @@ public class EarthBallScript : MonoBehaviour
     [SerializeField] private float arcHeight = 6f;
     private Rigidbody2D rb;
 
+    [SerializeField] private int damage = 2;
+
     private float direction;
 
     void Awake()
@@ -37,5 +39,17 @@ public class EarthBallScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+
+        Destroy(gameObject);
     }
 }
