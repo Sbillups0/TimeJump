@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float landingShakeDuration = 0.15f;
     [SerializeField] private float landingShakeStrength = 0.25f;
+    [SerializeField] private float regularLandingParticleSize = 1f;
+    [SerializeField] private float chargedLandingParticleSize = 2.5f;
 
     [Header("Sound Effects")]
     [SerializeField] private AudioSource audioSource;
@@ -97,14 +99,15 @@ public class PlayerMovement : MonoBehaviour
         {
             PlaySound(landingSound);
 
-            // Particles happen on both regular jump and P charged jump.
-            PlayLandingParticles();
-
-            // Screen shake only happens after P charged jump.
             if (shouldShakeOnLanding)
             {
+                PlayLandingParticles(chargedLandingParticleSize);
                 ShakeCamera();
                 shouldShakeOnLanding = false;
+            }
+            else
+            {
+                PlayLandingParticles(regularLandingParticleSize);
             }
         }
 
@@ -215,8 +218,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // Regular jump with Space.
-        // This gets landing particles, but no camera shake.
         if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded && !isCharging)
         {
             jumpVelocity = minJumpVelocity;
@@ -227,7 +228,6 @@ public class PlayerMovement : MonoBehaviour
             PlaySound(jumpSound);
         }
 
-        // Start charging with P.
         if (Keyboard.current.pKey.wasPressedThisFrame && isGrounded)
         {
             isCharging = true;
@@ -239,15 +239,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Keep charging while P is held.
         if (isCharging && Keyboard.current.pKey.isPressed)
         {
             chargeTimer += Time.deltaTime;
             chargeTimer = Mathf.Clamp(chargeTimer, 0f, maxChargeTime);
         }
 
-        // Release P charged jump.
-        // This gets landing particles AND camera shake.
         if (isCharging && Keyboard.current.pKey.wasReleasedThisFrame)
         {
             isCharging = false;
@@ -261,7 +258,6 @@ public class PlayerMovement : MonoBehaviour
             jumpVelocity = Mathf.Lerp(minJumpVelocity, maxJumpVelocity, chargePercent);
 
             jumpRequested = true;
-
             shouldShakeOnLanding = true;
 
             PlaySound(chargeJumpSound);
@@ -284,7 +280,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void PlayLandingParticles()
+    private void PlayLandingParticles(float particleSizeMultiplier)
     {
         if (landingParticles == null)
         {
@@ -304,6 +300,10 @@ public class PlayerMovement : MonoBehaviour
             landingParticles.transform.position = transform.position;
         }
 
+        ParticleSystem.MainModule main = landingParticles.main;
+        main.startSizeMultiplier = particleSizeMultiplier;
+
+        landingParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         landingParticles.Play();
     }
 
