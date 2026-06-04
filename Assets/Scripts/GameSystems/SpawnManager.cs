@@ -17,6 +17,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private bool resetPlayerVelocity = true;
     [SerializeField] private PlayerHealth playerHealth;
 
+    [SerializeField] private GameObject switcher;
+   
+    
+
     private bool isRespawning;
 
     private void Awake()
@@ -99,6 +103,28 @@ public class SpawnManager : MonoBehaviour
 
     private void RespawnPlayerImmediately()
     {
+
+        CharacterSwitcher1 switcher1 = null;
+        CharacterSwitcher2 switcher2 = null;
+        CharacterSwitcher switcherf = null;
+
+        if (switcher != null)
+        {
+            switcher1 = switcher.GetComponent<CharacterSwitcher1>();
+            switcher2 = switcher.GetComponent<CharacterSwitcher2>();
+            switcherf = switcher.GetComponent<CharacterSwitcher>();
+        }
+
+    // pick active character from whichever exists
+        if (switcher1 != null && switcher1.activeCharacter != null)
+            player = switcher1.activeCharacter.transform;
+        else if (switcher2 != null && switcher2.activeCharacter != null)
+            player = switcher2.activeCharacter.transform;
+        else if (switcherf != null && switcherf.activeCharacter != null)
+            player = switcherf.activeCharacter.transform;
+        else
+            player = player; // fallback to single player
+
         if (player == null)
         {
             Debug.LogWarning("SpawnManager has no player assigned.");

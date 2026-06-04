@@ -65,7 +65,6 @@ public class SlimeScript : MonoBehaviour
 
         Vector2 velocity = rb.linearVelocity;
 
-// only change horizontal movement
         velocity.x = direction.x * moveSpeed;
 
         rb.linearVelocity = velocity;

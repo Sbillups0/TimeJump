@@ -37,13 +37,11 @@ public class iceProjectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit");
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
-        Debug.Log("Hit:" + other.name);
-        EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
+        EnemyHealth enemy = collision.gameObject.GetComponentInParent<EnemyHealth>();
 
         if (enemy != null)
         {
@@ -51,5 +49,8 @@ public class iceProjectile : MonoBehaviour
         }
 
         Destroy(gameObject);
+        }
     }
+
+    
 }

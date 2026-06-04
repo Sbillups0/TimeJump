@@ -38,14 +38,12 @@ public class fireScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-                Debug.Log("Hit:" + other.name);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit");
 
-        EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
-        
+        EnemyHealth enemy = collision.gameObject.GetComponentInParent<EnemyHealth>();
 
         if (enemy != null)
         {
@@ -53,5 +51,8 @@ public class fireScript : MonoBehaviour
         }
 
         Destroy(gameObject);
+        }
     }
+
+    
 }

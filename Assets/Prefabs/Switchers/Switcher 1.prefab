@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 347672876572878786}
   - component: {fileID: 8927532503690192654}
-  - component: {fileID: 1048975865706813401}
+  - component: {fileID: 5744178061006450065}
   m_Layer: 0
   m_Name: Switcher 1
   m_TagString: Untagged
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 6338813052355382670}
---- !u!114 &1048975865706813401
+--- !u!114 &5744178061006450065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,6 +112,7 @@ MonoBehaviour:
   Bjorn: {fileID: 271474030943776714}
   mainCamera: {fileID: 6338813052355382670}
   cameraOffset: {x: 0, y: 0, z: -10}
+  activeCharacter: {fileID: 0}
 --- !u!1 &2089947020866853858
 GameObject:
   m_ObjectHideFlags: 0

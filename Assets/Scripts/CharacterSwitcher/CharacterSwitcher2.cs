@@ -10,7 +10,7 @@ public class CharacterSwitcher2 : MonoBehaviour
     public Camera mainCamera;
     public Vector3 cameraOffset = new Vector3(0, 0, -10);
 
-    private GameObject activeCharacter;
+    public GameObject activeCharacter;
 
     void Start()
     {

@@ -53,9 +53,5 @@ public class EarthBallScript : MonoBehaviour
         Destroy(gameObject);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        
-    }
 }
+
