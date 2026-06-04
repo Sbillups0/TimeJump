@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyShooterAI : MonoBehaviour
 {
     [Header("Targeting")]
     [SerializeField] private Transform player;
+    [SerializeField] private bool autoFindClosestPlayer = true;
+    [SerializeField] private float retargetInterval = 0.2f;
     [SerializeField] private float detectionRange = 8f;
     [SerializeField] private float shootingRange = 4f;
     [SerializeField] private float stopBuffer = 0.2f;
@@ -12,6 +15,7 @@ public class EnemyShooterAI : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private bool flyingEnemy = true;
+
     [Header("Facing")]
     [SerializeField] private bool spriteFacesRightByDefault = true;
     [SerializeField] private Vector2 spawnOffset = new Vector2(0.6f, 0f);
@@ -30,6 +34,7 @@ public class EnemyShooterAI : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private float nextShootTime;
+    private float nextRetargetTime;
     private Vector2 lastAimDirection = Vector2.left;
 
     private void Awake()
@@ -37,16 +42,6 @@ public class EnemyShooterAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (player == null)
-        {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-            if (playerObject != null)
-            {
-                player = playerObject.transform;
-            }
-        }
 
         if (flyingEnemy)
         {
@@ -56,6 +51,12 @@ public class EnemyShooterAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (autoFindClosestPlayer && Time.time >= nextRetargetTime)
+        {
+            nextRetargetTime = Time.time + retargetInterval;
+            player = FindClosestPlayer();
+        }
+
         if (player == null)
         {
             StopMoving();
@@ -93,6 +94,51 @@ public class EnemyShooterAI : MonoBehaviour
                 TryShoot();
             }
         }
+    }
+
+    private Transform FindClosestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        Transform closest = null;
+        float closestDistanceSqr = Mathf.Infinity;
+
+        foreach (GameObject playerObject in players)
+        {
+            if (playerObject == null)
+                continue;
+
+            if (!playerObject.activeInHierarchy)
+                continue;
+
+            // Optional: ignore dead players if they have PlayerHealth.
+            PlayerHealth health = playerObject.GetComponent<PlayerHealth>();
+
+            if (health != null)
+            {
+                // Only use this if your PlayerHealth has an IsDead property.
+                // if (health.IsDead)
+                //     continue;
+            }
+
+            // This helps with your switcher setup:
+            // the inactive character may still be active in the scene,
+            // but its PlayerInput/controller is disabled.
+            PlayerInput input = playerObject.GetComponent<PlayerInput>();
+
+            if (input != null && !input.enabled)
+                continue;
+
+            float distanceSqr = ((Vector2)playerObject.transform.position - rb.position).sqrMagnitude;
+
+            if (distanceSqr < closestDistanceSqr)
+            {
+                closestDistanceSqr = distanceSqr;
+                closest = playerObject.transform;
+            }
+        }
+
+        return closest;
     }
 
     private void MoveTowardPlayer(Vector2 direction)
@@ -143,13 +189,18 @@ public class EnemyShooterAI : MonoBehaviour
         }
     }
 
-    // Call this from an Animation Event during the shoot animation.
     public void FireProjectile()
     {
         if (projectilePrefab == null || projectileSpawnPoint == null)
         {
             Debug.LogWarning("Enemy projectile prefab or spawn point is missing.");
             return;
+        }
+
+        // Re-check target right before shooting.
+        if (autoFindClosestPlayer)
+        {
+            player = FindClosestPlayer();
         }
 
         Vector2 direction = lastAimDirection;
@@ -170,7 +221,6 @@ public class EnemyShooterAI : MonoBehaviour
         if (projectile != null)
         {
             projectile.Launch(direction, gameObject);
-            // ADD SHOOT SOUND HERE
         }
         else
         {

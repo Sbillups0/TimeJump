@@ -276,7 +276,8 @@ public class PlayerController : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        // If tag or layer is ground, set isGrounded to true
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             if(!isGrounded && landingSound != null && audioSource != null)
             {

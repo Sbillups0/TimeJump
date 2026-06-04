@@ -7817,7 +7817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e34e97a2c62402b9624c94fa61ba64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelConnector
-  nextSceneName: GameScene
+  nextSceneName: BB_Bjorn_Emre
   playerTag: Player
   audioSource: {fileID: 0}
   touchSound: {fileID: 0}
@@ -8230,6 +8230,9 @@ MonoBehaviour:
   respawnDelay: 0.25
   resetPlayerVelocity: 1
   playerHealth: {fileID: 0}
+  switcher: {fileID: 0}
+  restoreAllCharacterHealth: 1
+  moveAllCharactersToCheckpoint: 0
 --- !u!4 &1780355860
 Transform:
   m_ObjectHideFlags: 0
