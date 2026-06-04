@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 1222881366924622323}
   - component: {fileID: 917658272718602182}
   m_Layer: 5
-  m_Name: PauseScreenCanvas
+  m_Name: Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
