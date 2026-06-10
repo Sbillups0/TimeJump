@@ -15166,6 +15166,9 @@ MonoBehaviour:
   respawnDelay: 0.25
   resetPlayerVelocity: 1
   playerHealth: {fileID: 0}
+  switcher: {fileID: 0}
+  restoreAllCharacterHealth: 1
+  moveAllCharactersToCheckpoint: 0
 --- !u!4 &774833361
 Transform:
   m_ObjectHideFlags: 0
@@ -15360,7 +15363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e34e97a2c62402b9624c94fa61ba64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelConnector
-  nextSceneName: Beanball Tutorial
+  nextSceneName: BossLevel
   playerTag: Player
   audioSource: {fileID: 0}
   touchSound: {fileID: 0}
@@ -22560,7 +22563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d875b2cd78c444fb90398cf98b3bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IPCatHealth
-  respawnPoint: {fileID: 1096269252}
+  maxHealth: 3
+  currentHealth: 0
+  invincibilityTime: 1
+  knockbackForce: 10
+  knockbackDuration: 0.2
+  spawnManager: {fileID: 0}
 --- !u!1 &2116562464
 GameObject:
   m_ObjectHideFlags: 0
