@@ -1,25 +1,120 @@
+using System.Collections;
 using UnityEngine;
 
 public class IPCatHealth : MonoBehaviour
 {
-    public Transform respawnPoint;
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int currentHealth;
+
+    [Header("Damage")]
+    [SerializeField] private float invincibilityTime = 1f;
+
+    [Header("Knockback")]
+    [SerializeField] private float knockbackForce = 10f;
+    [SerializeField] private float knockbackDuration = 0.2f;
+
+    [Header("Respawn")]
+    [SerializeField] private SpawnManager spawnManager;
+
+    private bool isInvincible;
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+
+        if (spawnManager == null)
+            spawnManager = FindFirstObjectByType<SpawnManager>();
+    }
+
+    public void TakeDamage(int damage, Vector2 knockbackDirection)
+    {
+        if (isInvincible)
+            return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        Debug.Log("Player HP: " + currentHealth + " / " + maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
+        StartCoroutine(KnockbackRoutine(knockbackDirection));
+        StartCoroutine(InvincibilityRoutine());
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        Debug.Log("Player healed. HP: " + currentHealth + " / " + maxHealth);
+    }
+
+    public void RestoreFullHealth()
+    {
+        currentHealth = maxHealth;
+        Debug.Log("Player health restored.");
+    }
 
     public void Kill()
     {
-        // Respawn all enemies
-        if (EnemyManager.Instance != null)
-            EnemyManager.Instance.RespawnAllEnemies();
+        currentHealth = 0;
+        Die();
+    }
 
-        // Reset player position and velocity
-        transform.position = respawnPoint.position;
+    private void Die()
+    {
+        Debug.Log("Player died.");
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-            rb.linearVelocity = Vector2.zero;
+        if (spawnManager != null)
+            spawnManager.RespawnPlayer();
+        else
+            Debug.LogWarning("IPCatHealth has no SpawnManager assigned.");
+    }
 
-        // Reset player state
+    private IEnumerator KnockbackRoutine(Vector2 knockbackDirection)
+    {
         Player player = GetComponent<Player>();
-        if (player != null)
-            player.ResetState();
+        if (player != null) player.SetKnockedBack(true);
+
+        if (rb != null)
+            rb.linearVelocity = knockbackDirection * knockbackForce;
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        if (player != null) player.SetKnockedBack(false);
+    }
+
+    private IEnumerator InvincibilityRoutine()
+    {
+        isInvincible = true;
+
+        float timer = 0f;
+        float flashInterval = 0.1f;
+
+        while (timer < invincibilityTime)
+        {
+            if (spriteRenderer != null)
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            yield return new WaitForSeconds(flashInterval);
+            timer += flashInterval;
+        }
+
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = true;
+
+        isInvincible = false;
     }
 }

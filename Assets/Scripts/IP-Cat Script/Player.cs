@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     private float launchFrameTimer = 0f;
     private int launchCurrentFrame = 0;
 
+    private bool isKnockedBack = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -83,7 +85,6 @@ public class Player : MonoBehaviour
             LayerMask.GetMask("Ground")
         );
 
-        // Double jump (limited to maxJumps)
         if (Keyboard.current.spaceKey.wasPressedThisFrame && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -178,7 +179,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.CompareTag("Enemy"))
                     {
-                        hit.gameObject.SetActive(false); // disable instead of destroy so EnemyManager can respawn
+                        hit.gameObject.SetActive(false);
                     }
                 }
             }
@@ -193,11 +194,17 @@ public class Player : MonoBehaviour
         wasGrounded = isGrounded;
     }
 
+    public void SetKnockedBack(bool value)
+    {
+        isKnockedBack = value;
+    }
+
     public void ResetState()
     {
         isCharging = false;
         chargingStarted = false;
         isLaunching = false;
+        isKnockedBack = false;
         punchTimer = 0f;
         launchCooldownTimer = 0f;
         jumpsRemaining = maxJumps;
@@ -251,6 +258,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (isLaunching) return;
+        if (isKnockedBack) return;
 
         float control = isGrounded ? 1f : 0.75f;
         rb.linearVelocity = new Vector2(moveInput * moveSpeed * control, rb.linearVelocity.y);
