@@ -3,6 +3,7 @@ using UnityEngine;
 public class ArrowProjectile : MonoBehaviour
 {
     public float speed = 10f;
+    public int damage = 1;
     private Vector3 direction;
 
     public void SetDirection(Vector3 dir)
@@ -22,9 +23,12 @@ public class ArrowProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            IPCatHealth health = other.GetComponent<IPCatHealth>();
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
-                health.Kill();
+            {
+                Vector2 knockbackDir = (other.transform.position - transform.position).normalized;
+                health.TakeDamage(damage, knockbackDir);
+            }
 
             Destroy(gameObject);
         }

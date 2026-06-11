@@ -16708,7 +16708,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -1}
-  m_Size: {x: 5, y: 8}
+  m_Size: {x: 3, y: 6}
   m_Direction: 0
 --- !u!114 &1298290639
 MonoBehaviour:
@@ -16733,7 +16733,7 @@ MonoBehaviour:
   dashDuration: 0.5
   dashCooldown: 4
   windUpTime: 1
-  dashDamage: 20
+  dashDamage: 1
   projectilePrefab: {fileID: 7937090887804040809, guid: 19ef51bf2dfdf43d1b7c43ed150e4aca, type: 3}
   firePoint: {fileID: 892590620}
   shootCooldown: 4
@@ -21685,7 +21685,6 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
   attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
   landingSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
-  landingParticles: {fileID: 0}
   jumpForce: 10
   maxJumps: 2
   punchPoint: {fileID: 1397003742}
@@ -21848,10 +21847,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2076648829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d875b2cd78c444fb90398cf98b3bf8, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d39678d4a3e340849ea1a03af3c0443, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IPCatHealth
-  maxHealth: 100
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
   currentHealth: 0
   invincibilityTime: 1
   knockbackForce: 10

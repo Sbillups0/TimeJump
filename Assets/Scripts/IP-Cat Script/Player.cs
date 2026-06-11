@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private float moveInput;
-    public ParticleSystem landingParticles;
     private bool wasGrounded;
 
     [Header("Jump")]
@@ -188,7 +187,6 @@ public class Player : MonoBehaviour
         if (isGrounded && !wasGrounded)
         {
             jumpsRemaining = maxJumps;
-            landingParticles.Play();
             audioSource.PlayOneShot(landingSound);
         }
         wasGrounded = isGrounded;

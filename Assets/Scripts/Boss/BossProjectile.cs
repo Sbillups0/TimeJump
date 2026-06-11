@@ -3,7 +3,7 @@ using UnityEngine;
 public class BossProjectile : MonoBehaviour
 {
     public float speed = 8f;
-    public int damage = 10;
+    public int damage = 1;
     public float lifetime = 5f;
     private Vector2 direction;
 
@@ -26,7 +26,7 @@ public class BossProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            IPCatHealth playerHealth = other.GetComponent<IPCatHealth>();
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 Vector2 knockbackDir = (other.transform.position - transform.position).normalized;
@@ -36,10 +36,7 @@ public class BossProjectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Destroy on hitting ground
         if (other.CompareTag("Ground"))
-        {
             Destroy(gameObject);
-        }
     }
 }

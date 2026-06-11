@@ -126,7 +126,6 @@ public class BossScript : MonoBehaviour
             rb.linearVelocity = new Vector2(moveX * moveSpeed, moveY);
         }
 
-        // Flip to face player
         if (player.position.x < transform.position.x)
             transform.localScale = new Vector3(-1, 1, 1);
         else
@@ -141,7 +140,6 @@ public class BossScript : MonoBehaviour
 
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-        // Just flip the sprite based on direction, don't rotate the whole object
         SpriteRenderer sr = proj.GetComponent<SpriteRenderer>();
         if (sr != null)
             sr.flipX = direction.x > 0;
@@ -173,7 +171,7 @@ public class BossScript : MonoBehaviour
 
     void DealDamageToPlayer(Collider2D other)
     {
-        IPCatHealth playerHealth = other.GetComponent<IPCatHealth>();
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
             Vector2 knockbackDir = (other.transform.position - transform.position).normalized;

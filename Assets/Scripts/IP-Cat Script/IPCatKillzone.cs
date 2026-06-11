@@ -6,7 +6,7 @@ public class IPCatKillzone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            IPCatHealth health = other.GetComponent<IPCatHealth>();
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
                 health.Kill();
         }
