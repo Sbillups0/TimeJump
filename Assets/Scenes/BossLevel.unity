@@ -195,8 +195,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 25.79
       objectReference: {fileID: 0}
+    - target: {fileID: 7556392742793200123, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2080544811539382438, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
@@ -63489,8 +63494,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1}
-  m_Size: {x: 5, y: 8}
+  m_Offset: {x: 0, y: -0.5}
+  m_Size: {x: 2, y: 4}
   m_Direction: 0
 --- !u!114 &1298290639
 MonoBehaviour:
@@ -63507,7 +63512,7 @@ MonoBehaviour:
   moveSpeed: 5
   chaseWeight: 0.6
   directionChangeTime: 2
-  floatHeight: 8
+  floatHeight: 5
   floatSmoothing: 3
   bobAmount: 0.2
   bobSpeed: 2
@@ -63515,11 +63520,12 @@ MonoBehaviour:
   dashDuration: 0.5
   dashCooldown: 4
   windUpTime: 1
-  dashDamage: 20
+  dashDamage: 1
   projectilePrefab: {fileID: 7937090887804040809, guid: 19ef51bf2dfdf43d1b7c43ed150e4aca, type: 3}
   firePoint: {fileID: 892590620}
   shootCooldown: 4
   farDistance: 15
+  shootAnimationTime: 1
   player: {fileID: 1291791095}
 --- !u!1 &1301082164
 GameObject:

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BossScript : MonoBehaviour
@@ -27,11 +28,13 @@ public class BossScript : MonoBehaviour
     public Transform firePoint;
     public float shootCooldown = 3f;
     public float farDistance = 8f;
+    public float shootAnimationTime = 1f;
 
     [Header("References")]
     public Transform player;
 
     private Rigidbody2D rb;
+    private Animator anim;
     private float randomDirectionX;
     private float timer;
     private float shootCooldownTimer = 0f;
@@ -47,6 +50,7 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         rb.gravityScale = 0;
         rb.bodyType = RigidbodyType2D.Kinematic;
         PickNewRandomDirection();
@@ -70,7 +74,7 @@ public class BossScript : MonoBehaviour
 
             if (shootCooldownTimer <= 0 && distanceToPlayer >= farDistance)
             {
-                ShootProjectile();
+                StartCoroutine(ShootAnimationRoutine());
                 shootCooldownTimer = shootCooldown;
             }
             else if (dashCooldownTimer <= 0 && distanceToPlayer < farDistance)
@@ -132,12 +136,29 @@ public class BossScript : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
     }
 
-    void ShootProjectile()
+    IEnumerator ShootAnimationRoutine()
+    {
+        if (anim != null)
+            anim.SetBool("isShooting", true);
+
+        // Wait for animation to reach last frame
+        yield return new WaitForSeconds(shootAnimationTime - 0.1f);
+
+        // Fire projectile on last frame
+        FireProjectile();
+
+        // Brief pause then return to idle
+        yield return new WaitForSeconds(0.1f);
+
+        if (anim != null)
+            anim.SetBool("isShooting", false);
+    }
+
+    void FireProjectile()
     {
         if (projectilePrefab == null || firePoint == null) return;
 
         Vector2 direction = (player.position - firePoint.position).normalized;
-
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
         SpriteRenderer sr = proj.GetComponent<SpriteRenderer>();
