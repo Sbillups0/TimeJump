@@ -3418,7 +3418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e34e97a2c62402b9624c94fa61ba64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelConnector
-  nextSceneName: Eres Tutorial
+  nextSceneName: BB_Bjorn_Level
   playerTag: Player
   audioSource: {fileID: 509957252}
   touchSound: {fileID: 8300000, guid: b0e62ed71b1538648b719821f4f63b4c, type: 3}
