@@ -107,6 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SignTrigger
   tutorialBox: {fileID: 0}
   triggerOnce: 0
+  audioSource: {fileID: 0}
+  signSound: {fileID: 0}
 --- !u!61 &3110086762087851994
 BoxCollider2D:
   m_ObjectHideFlags: 0

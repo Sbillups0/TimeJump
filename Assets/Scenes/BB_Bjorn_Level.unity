@@ -2237,6 +2237,10 @@ PrefabInstance:
       propertyPath: activeCharacter
       value: 
       objectReference: {fileID: 556177789}
+    - target: {fileID: 7591427678257989074, guid: 515e572b893da414baf8a071681dfd26, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8511579679185537253, guid: 515e572b893da414baf8a071681dfd26, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.26
@@ -2246,7 +2250,8 @@ PrefabInstance:
       value: -0.71
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4450938184576332054, guid: 515e572b893da414baf8a071681dfd26, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 515e572b893da414baf8a071681dfd26, type: 3}
