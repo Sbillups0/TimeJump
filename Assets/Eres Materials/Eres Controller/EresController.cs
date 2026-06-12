@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip landingSound;
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip iceSound;
+    [SerializeField] private AudioClip earthSound;
+    [SerializeField] private AudioClip switchSpellSound;
 
 
     private Rigidbody2D rb;
@@ -66,6 +70,11 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Eres Attacking");
 
+        if (attackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(attackSound);
+        }
+
         switch(currentSpell)
         {
             case SpellType.Fire:
@@ -96,6 +105,10 @@ public class PlayerController : MonoBehaviour
         float direction = spriteRenderer.flipX ? 1f : -1f;
 
         //Add Fire Sound here
+        if (fireSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
 
         if (direction < 0)
     {
@@ -120,6 +133,10 @@ public class PlayerController : MonoBehaviour
         float direction = spriteRenderer.flipX ? 1f : -1f;
 
         //Add Ice Sound here
+        if (iceSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(iceSound);
+        }
 
         if (direction < 0)
     {
@@ -145,6 +162,10 @@ public class PlayerController : MonoBehaviour
         float direction = spriteRenderer.flipX ? 1f : -1f;
 
         //Add Earth Sound Here
+        if (earthSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(earthSound);
+        }
 
         if (direction < 0)
     {
@@ -161,6 +182,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Eres Changing Spells");
 
         // Maybe a sound for changing spells here?
+        if (switchSpellSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(switchSpellSound);
+        }
 
         currentSpell =(SpellType)(((int)currentSpell + 1) % System.Enum.GetValues(typeof(SpellType)).Length);
         Debug.Log("Equipped Spell: " + currentSpell);
@@ -320,7 +345,6 @@ public class PlayerController : MonoBehaviour
 //gravity decay, curve from 0-1, 1 being the most hovering, 0 being the least. curve is based on hover time, so the longer you hover, X
 //the more gravity decays, but it will never fully decay. when you land, it resets to 0. X
 // do something similar to speed X
-// can set own exponential graph for the decay X
 
 // TO DO:
 // if i wanna do the collision where it decreases hover time I do a collision check

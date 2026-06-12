@@ -332,6 +332,10 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
   attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
   landingSound: {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
+  fireSound: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
+  iceSound: {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
+  earthSound: {fileID: 8300000, guid: b7f8695cf65a4f24eb37544298821146, type: 3}
+  switchSpellSound: {fileID: 8300000, guid: 78ad99fd0a0a5144280b07bbdba84815, type: 3}
   animator: {fileID: 8854092730981776833}
 --- !u!114 &8467774087397974297
 MonoBehaviour:
@@ -378,6 +382,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   invincibilityTime: 1
+  knockbackForce: 10
+  knockbackDuration: 0.2
   spawnManager: {fileID: 0}
 --- !u!95 &8854092730981776833
 Animator:
