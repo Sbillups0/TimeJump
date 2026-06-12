@@ -195,8 +195,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 25.79
       objectReference: {fileID: 0}
+    - target: {fileID: 7556392742793200123, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2080544811539382438, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b8d5d44df0ba4791906c41de9311234, type: 3}
@@ -63520,6 +63525,7 @@ MonoBehaviour:
   firePoint: {fileID: 892590620}
   shootCooldown: 4
   farDistance: 15
+  shootAnimationTime: 1
   player: {fileID: 1291791095}
 --- !u!1 &1301082164
 GameObject:
