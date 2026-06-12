@@ -63494,8 +63494,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.5}
-  m_Size: {x: 1.5, y: 2}
+  m_Offset: {x: 0, y: -0.1}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
 --- !u!114 &1298290639
 MonoBehaviour:
@@ -63509,10 +63509,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b75b8d29f694ffdbdd43ccbaa4b0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossScript
-  moveSpeed: 3
+  moveSpeed: 2.5
   chaseWeight: 0.6
   directionChangeTime: 2
-  floatHeight: 3
+  floatHeight: 2.5
   floatSmoothing: 3
   bobAmount: 0.2
   bobSpeed: 2

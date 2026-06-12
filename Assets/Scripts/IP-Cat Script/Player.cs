@@ -18,6 +18,11 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private int jumpsRemaining;
 
+    [Header("Ground Check")]
+    public float groundCheckOffsetY = 0.38f;
+    public float groundCheckWidth = 0.8f;
+    public float groundCheckHeight = 0.2f;
+
     [Header("Punch")]
     public Transform punchPoint;
     public float punchRange = 0.8f;
@@ -78,8 +83,8 @@ public class Player : MonoBehaviour
         sr.flipX = !facingRight;
 
         isGrounded = Physics2D.OverlapBox(
-            new Vector2(transform.position.x, transform.position.y - 0.9f),
-            new Vector2(0.4f, 0.1f),
+            new Vector2(transform.position.x, transform.position.y - groundCheckOffsetY),
+            new Vector2(groundCheckWidth, groundCheckHeight),
             0f,
             LayerMask.GetMask("Ground")
         );
@@ -276,8 +281,8 @@ public class Player : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(
-            new Vector3(transform.position.x, transform.position.y - 1.4f, 0f),
-            new Vector3(0.4f, 0.1f, 0f)
+            new Vector3(transform.position.x, transform.position.y - groundCheckOffsetY, 0f),
+            new Vector3(groundCheckWidth, groundCheckHeight, 0f)
         );
     }
 }
