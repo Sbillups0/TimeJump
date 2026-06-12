@@ -8,8 +8,10 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int maxHealth = 1;
 
     [Header("Death")]
+    [SerializeField] private bool destroyImmediately = false;
     [SerializeField] private float destroyDelay = 0.7f;
     [SerializeField] private string deathTrigger = "Die";
+    [SerializeField] private bool useDeathAnimation = true;
     [SerializeField] private bool disableCollidersOnDeath = true;
     [SerializeField] private bool stopMovementOnDeath = true;
 
@@ -20,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D[] colliders;
     private EnemyShooterAI enemyShooterAI;
+    private PlantShooter plantShooter;
 
     public bool Invincible => invincible;
     public bool IsDead => isDead;
@@ -32,10 +35,13 @@ public class EnemyHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         colliders = GetComponentsInChildren<Collider2D>();
         enemyShooterAI = GetComponent<EnemyShooterAI>();
+        plantShooter = GetComponent<PlantShooter>();
     }
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(name + " TakeDamage called: " + damage);
+
         if (isDead)
             return;
 
@@ -68,6 +74,13 @@ public class EnemyHealth : MonoBehaviour
         if (enemyShooterAI != null)
         {
             enemyShooterAI.enabled = false;
+            // ADD DEATH FOR GOLEM SOUND HERE
+        }
+
+        if (plantShooter != null)
+        {
+            plantShooter.enabled = false;
+            // ADD DEATH FOR PLANT SOUND HERE
         }
 
         if (stopMovementOnDeath && rb != null)
@@ -88,7 +101,13 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
-        if (animator != null)
+        if (destroyImmediately)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (useDeathAnimation && animator != null && !string.IsNullOrEmpty(deathTrigger))
         {
             animator.SetTrigger(deathTrigger);
         }

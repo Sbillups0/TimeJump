@@ -10,15 +10,35 @@ public class PlayerController : MonoBehaviour
     public bool isHovering;
     public float hoverTime;
     public bool isJumping = false;
-    public float maxHoverTime = 4f;
+    public float maxHoverTime = 2.5f;
     private Vector2 moveInput;
     private bool jumpPressed;
+
+    private bool attackPressed;
+    private bool specialPressed;
+
+    private enum SpellType
+    {
+        Fire, Ice, Earth
+    }
+
+    [SerializeField] private SpellType currentSpell;
+    [SerializeField] private GameObject iceProjectilePrefab;
+    [SerializeField] private GameObject earthBallPrefab;
+    [SerializeField] private GameObject fireWallPrefab;
+    [SerializeField] private Transform spellSpawn;
+    [SerializeField] private float spellOffset = 1f;
+
 
     [Header("Sound Effects")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip landingSound;
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip iceSound;
+    [SerializeField] private AudioClip earthSound;
+    [SerializeField] private AudioClip switchSpellSound;
 
 
     private Rigidbody2D rb;
@@ -46,6 +66,131 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        Debug.Log("Eres Attacking");
+
+        if (attackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(attackSound);
+        }
+
+        switch(currentSpell)
+        {
+            case SpellType.Fire:
+                CastFire();
+                break;
+            case SpellType.Ice:
+                CastIce();
+                break;
+            case SpellType.Earth:
+                CastEarth();
+                break;
+        }
+
+    }
+
+    void CastFire()
+    {
+        Debug.Log("Cast Fire");
+       
+        animator.SetTrigger("CastFire");
+
+        GameObject projectile =
+            Instantiate(
+                fireWallPrefab,
+                spellSpawn.position,
+                Quaternion.identity
+            );
+        float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Fire Sound here
+        if (fireSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
+
+        if (direction < 0)
+    {
+        Vector3 scale = projectile.transform.localScale;
+        scale.x *= -1;
+        projectile.transform.localScale = scale;
+    }
+
+        projectile.GetComponent<fireScript>().Initialize(direction);
+    }
+
+    void CastIce()
+    {
+        Debug.Log("Cast Ice");
+        animator.SetTrigger("CastIce");
+        GameObject projectile =
+            Instantiate(
+                iceProjectilePrefab,
+                spellSpawn.position,
+                Quaternion.identity
+            );
+        float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Ice Sound here
+        if (iceSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(iceSound);
+        }
+
+        if (direction < 0)
+    {
+        Vector3 scale = projectile.transform.localScale;
+        scale.x *= -1;
+        projectile.transform.localScale = scale;
+    }
+
+        projectile.GetComponent<iceProjectile>().Initialize(direction);
+    }
+
+    void CastEarth()
+    {
+        Debug.Log("Cast Earth");
+        animator.SetTrigger("CastEarth");
+
+        GameObject projectile =
+            Instantiate(
+                earthBallPrefab,
+                spellSpawn.position,
+                Quaternion.identity
+            );
+        float direction = spriteRenderer.flipX ? 1f : -1f;
+
+        //Add Earth Sound Here
+        if (earthSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(earthSound);
+        }
+
+        if (direction < 0)
+    {
+        Vector3 scale = projectile.transform.localScale;
+        scale.x *= -1;
+        projectile.transform.localScale = scale;
+    }
+
+        projectile.GetComponent<EarthBallScript>().Initialize(direction);
+    }
+
+    void Special()
+    {
+        Debug.Log("Eres Changing Spells");
+
+        // Maybe a sound for changing spells here?
+        if (switchSpellSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(switchSpellSound);
+        }
+
+        currentSpell =(SpellType)(((int)currentSpell + 1) % System.Enum.GetValues(typeof(SpellType)).Length);
+        Debug.Log("Equipped Spell: " + currentSpell);
+    }
+
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
@@ -63,11 +208,19 @@ public class PlayerController : MonoBehaviour
 
         if (moveInput.x > 0.1f)
         {
+            
             spriteRenderer.flipX = true;
+
+            Vector3 pos = spellSpawn.localPosition;
+            pos.x = spellOffset;
+            spellSpawn.localPosition = pos;
         }
         else if (moveInput.x < -0.1f)
         {
             spriteRenderer.flipX = false;
+            Vector3 pos = spellSpawn.localPosition;
+            pos.x = -spellOffset;
+            spellSpawn.localPosition = pos;
         }
     }
 
@@ -76,6 +229,26 @@ public class PlayerController : MonoBehaviour
         if (value.isPressed)
         {
             jumpPressed = true;
+        }
+    }
+
+    //handling attacks
+    // 3 different spells that you can cycle through with p
+    //spells are casted with o
+    
+    public void OnAttack(InputValue value)
+    {
+        if (value.isPressed) 
+        {
+            attackPressed = true;
+        }
+    }
+
+    public void OnSpecial(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            specialPressed = true;
         }
     }
 
@@ -95,8 +268,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-       
+        if (attackPressed)
+    {
+        Attack();
+        attackPressed = false;
+    }
+
+    if (specialPressed)
+    {
+        Special();
+        specialPressed = false;
+    }
     }
 // Called Per Physics Update
     void FixedUpdate()
@@ -119,7 +301,8 @@ public class PlayerController : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        // If tag or layer is ground, set isGrounded to true
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             if(!isGrounded && landingSound != null && audioSource != null)
             {
@@ -137,6 +320,8 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    
 }
 
 // bool ifHover X
@@ -160,7 +345,6 @@ public class PlayerController : MonoBehaviour
 //gravity decay, curve from 0-1, 1 being the most hovering, 0 being the least. curve is based on hover time, so the longer you hover, X
 //the more gravity decays, but it will never fully decay. when you land, it resets to 0. X
 // do something similar to speed X
-// can set own exponential graph for the decay X
 
 // TO DO:
 // if i wanna do the collision where it decreases hover time I do a collision check

@@ -12,13 +12,25 @@ EditorBuildSettings:
     path: Assets/Scenes/Beanball Tutorial.unity
     guid: 153959fbfdb87ee498624ff717378281
   - enabled: 1
+    path: Assets/Scenes/BB_level.unity
+    guid: 62c75ba4a47cf411dbe6bf68fefa25d2
+  - enabled: 1
     path: Assets/Scenes/Bjorn_level.unity
     guid: bbe17e2fedfc74543b7615ea76f54e3c
+  - enabled: 1
+    path: Assets/Scenes/BB_Bjorn_Level.unity
+    guid: da1f852a0defb41518ebff8e53128906
   - enabled: 1
     path: Assets/Scenes/Eres Tutorial.unity
     guid: 56cd57386e1054e94933bc9af89d9aca
   - enabled: 1
+    path: Assets/Scenes/BB_Bjorn_Emre.unity
+    guid: 7c40d2d2dd03d4af09c99dcbf2c343cc
+  - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 910ada735e9088a4cbf99f61ecedf3b4
+  - enabled: 1
+    path: Assets/Scenes/BossLevel.unity
+    guid: 698faefe17f404ae68b47edc9feb0517
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

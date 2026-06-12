@@ -8,6 +8,10 @@ public class LevelConnector : MonoBehaviour
     [Header("Trigger Settings")]
     [SerializeField] private string playerTag = "Player";
 
+    [Header("Sound Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip touchSound;
+
     private bool hasTriggered;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -19,6 +23,11 @@ public class LevelConnector : MonoBehaviour
             return;
 
         hasTriggered = true;
+
+        if (audioSource != null && touchSound != null)
+        {
+            audioSource.PlayOneShot(touchSound);
+        }
 
         if (SceneTransitionManager.Instance != null)
         {

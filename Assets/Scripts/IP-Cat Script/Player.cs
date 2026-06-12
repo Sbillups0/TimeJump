@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private float moveInput;
-    public ParticleSystem landingParticles;
     private bool wasGrounded;
 
     [Header("Jump")]
     public float jumpForce = 10f;
+    public int maxJumps = 2;
     private bool isGrounded;
+    private int jumpsRemaining;
 
     [Header("Punch")]
     public Transform punchPoint;
@@ -55,12 +56,15 @@ public class Player : MonoBehaviour
     private float launchFrameTimer = 0f;
     private int launchCurrentFrame = 0;
 
+    private bool isKnockedBack = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        jumpsRemaining = maxJumps;
     }
 
     void Update()
@@ -71,19 +75,20 @@ public class Player : MonoBehaviour
 
         if (moveInput > 0) facingRight = true;
         if (moveInput < 0) facingRight = false;
+        sr.flipX = !facingRight;
 
         isGrounded = Physics2D.OverlapBox(
-            new Vector2(transform.position.x, transform.position.y - 0.5f),
-            new Vector2(0.8f, 0.1f),
+            new Vector2(transform.position.x, transform.position.y - 1.4f),
+            new Vector2(0.4f, 0.1f),
             0f,
             LayerMask.GetMask("Ground")
         );
 
-        // Simple infinite jump
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && jumpsRemaining > 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             audioSource.PlayOneShot(jumpSound);
+            jumpsRemaining--;
         }
 
         HandleLaunch();
@@ -173,7 +178,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.CompareTag("Enemy"))
                     {
-                        Destroy(hit.gameObject);
+                        hit.gameObject.SetActive(false);
                     }
                 }
             }
@@ -181,10 +186,28 @@ public class Player : MonoBehaviour
 
         if (isGrounded && !wasGrounded)
         {
-            landingParticles.Play();
+            jumpsRemaining = maxJumps;
             audioSource.PlayOneShot(landingSound);
         }
         wasGrounded = isGrounded;
+    }
+
+    public void SetKnockedBack(bool value)
+    {
+        isKnockedBack = value;
+    }
+
+    public void ResetState()
+    {
+        isCharging = false;
+        chargingStarted = false;
+        isLaunching = false;
+        isKnockedBack = false;
+        punchTimer = 0f;
+        launchCooldownTimer = 0f;
+        jumpsRemaining = maxJumps;
+        CancelInvoke("ResetToIdle");
+        ResetToIdle();
     }
 
     void HandleLaunch()
@@ -193,7 +216,8 @@ public class Player : MonoBehaviour
 
         if (Keyboard.current.oKey.wasPressedThisFrame && launchCooldownTimer <= 0f && !isLaunching)
         {
-            rb.linearVelocity = new Vector2(launchForceX, launchForceY);
+            float direction = facingRight ? 1f : -1f;
+            rb.linearVelocity = new Vector2(launchForceX * direction, launchForceY);
 
             isLaunching = true;
             launchCurrentFrame = 0;
@@ -232,6 +256,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (isLaunching) return;
+        if (isKnockedBack) return;
 
         float control = isGrounded ? 1f : 0.75f;
         rb.linearVelocity = new Vector2(moveInput * moveSpeed * control, rb.linearVelocity.y);
@@ -248,5 +273,11 @@ public class Player : MonoBehaviour
         if (punchPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(punchPoint.position, punchRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(
+            new Vector3(transform.position.x, transform.position.y - 1.4f, 0f),
+            new Vector3(0.4f, 0.1f, 0f)
+        );
     }
 }

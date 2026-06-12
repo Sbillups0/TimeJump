@@ -15,6 +15,11 @@ public class PlantShooter : MonoBehaviour
     [SerializeField] private string shootTriggerName = "Shoot";
     [SerializeField] private bool useAnimationEventForProjectile = true;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private float shootSoundVolume = 1f;
+
     private Coroutine shootRoutine;
 
     private void Awake()
@@ -22,6 +27,11 @@ public class PlantShooter : MonoBehaviour
         if (animator == null)
         {
             animator = GetComponent<Animator>();
+        }
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
         }
     }
 
@@ -86,6 +96,11 @@ public class PlantShooter : MonoBehaviour
         if (projectile != null)
         {
             projectile.Launch(shootDirection, gameObject);
+
+            if (audioSource != null && shootSound != null)
+            {
+                audioSource.PlayOneShot(shootSound, shootSoundVolume);
+            }
         }
         else
         {

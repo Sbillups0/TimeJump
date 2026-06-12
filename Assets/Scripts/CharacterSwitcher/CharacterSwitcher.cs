@@ -4,23 +4,25 @@ using UnityEngine.InputSystem;
 public class CharacterSwitcher : MonoBehaviour
 {
     [Header("Characters")]
-    public GameObject Beanball;
+    public GameObject BeanBall;
     public GameObject Bjorn;
     public GameObject Eres;
+
+    public GameObject IpCat;
     public Camera mainCamera;
     public Vector3 cameraOffset = new Vector3(0, 0, -10);
 
-    private GameObject activeCharacter;
+    public GameObject activeCharacter;
 
     void Start()
     {
         Debug.Log("Starting");
-        Beanball.GetComponent<PlayerController2D>().enabled = false;
         Bjorn.GetComponent<PlayerMovement>().enabled = false;
         Eres.GetComponent<PlayerController>().enabled = false;
+        IpCat.GetComponent<Player>().enabled = false;
         Debug.Log("About to switch");
-        SwitchTo(Beanball);
-        Debug.Log("Switched to Beanball ");
+        SwitchTo(BeanBall);
+        Debug.Log("Switched to BeanBall ");
     }
 
     // Update is called once per frame
@@ -44,8 +46,18 @@ public class CharacterSwitcher : MonoBehaviour
 
     void SwitchTo(GameObject character)
     {
+        
         if (activeCharacter != null)
         {
+            GameObject oldCharacter = activeCharacter;
+            //Swapping pos:
+            Vector3 tempPos = oldCharacter.transform.position;
+            Debug.Log("This is the current position" + tempPos);
+            tempPos.y += 1;
+            oldCharacter.transform.position = character.transform.position;
+            character.transform.position = tempPos;
+            Debug.Log ("This is the position after swap" + character.transform.position);
+
             var oldInp = activeCharacter.GetComponent<PlayerInput>();
             if (oldInp != null)
             {
@@ -72,7 +84,7 @@ public class CharacterSwitcher : MonoBehaviour
         Debug.Log("Swap Is Running");
         if (value.isPressed)
         {
-            if (activeCharacter == Beanball)
+            if (activeCharacter == BeanBall)
             {
                 SwitchTo(Bjorn);
             }
@@ -82,16 +94,22 @@ public class CharacterSwitcher : MonoBehaviour
             }
             else if (activeCharacter == Eres)
             {
-                SwitchTo(Beanball);
+                SwitchTo(IpCat);
             }
+            else if (activeCharacter == IpCat)
+            {
+                SwitchTo(BeanBall);
+            }
+            
+            
         }
     }
 
     void EnableController(GameObject character)
     {
-        if (character == Beanball)
+        if (character == BeanBall)
         {
-            Beanball.GetComponent<PlayerController2D>().enabled = true;
+            BeanBall.GetComponent<PlayerController2D>().enabled = true;
         }
         else if (character == Bjorn)
         {
@@ -101,14 +119,20 @@ public class CharacterSwitcher : MonoBehaviour
         {
             Eres.GetComponent<PlayerController>().enabled = true;
         }
+        else if (character == IpCat)
+        {
+            IpCat.GetComponent<Player>().enabled = true;
+
+        }
+        
     }
 
     void DisableController(GameObject character)
     {
-        if (character == Beanball)
+        if (character == BeanBall)
         {
-            Beanball.GetComponent<PlayerController2D>().enabled = false;
-            Beanball.GetComponent<PlayerController2D>().ResetMovementInput();
+            BeanBall.GetComponent<PlayerController2D>().enabled = false;
+            BeanBall.GetComponent<PlayerController2D>().ResetMovementInput();
         }
         else if (character == Bjorn)
         {
@@ -118,6 +142,11 @@ public class CharacterSwitcher : MonoBehaviour
         {
             Eres.GetComponent<PlayerController>().enabled = false;
         }
+        else if (character == IpCat)
+        {
+            IpCat.GetComponent<Player>().enabled = false;
+        }
+        
     }
 }
 

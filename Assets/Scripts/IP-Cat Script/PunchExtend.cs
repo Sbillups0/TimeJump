@@ -22,7 +22,7 @@ public class PunchExtend : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false); // disable instead of destroy so EnemyManager can respawn
             Destroy(gameObject);
         }
     }
