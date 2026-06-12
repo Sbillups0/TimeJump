@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         sr.flipX = !facingRight;
 
         isGrounded = Physics2D.OverlapBox(
-            new Vector2(transform.position.x, transform.position.y - 1.4f),
+            new Vector2(transform.position.x, transform.position.y - 0.9f),
             new Vector2(0.4f, 0.1f),
             0f,
             LayerMask.GetMask("Ground")
